@@ -30,11 +30,11 @@ const artilheiros = [
 ];
 
 const noticias = [
-  { titulo: 'Flamengo segue firme na liderança da Série A e amplia vantagem', categoria: 'Brasil', tempo: 'Há 1h', resumo: 'Time rubro-negro mantém boa sequência e controla a ponta com mais confiança na temporada.' },
-  { titulo: 'Palmeiras reage e se mantém na briga pela liderança', categoria: 'Premier', tempo: 'Há 3h', resumo: 'Equipes da parte alta da tabela seguem alternando a vantagem e aumentando a pressão no topo.' },
-  { titulo: 'Athletico e Fluminense aumentam pressão no G-4', categoria: 'Análise', tempo: 'Hoje', resumo: 'Ataques dos clubes da região de classificação mostram crescimento e volume ofensivo.' },
+  { titulo: 'Flamengo segue firme na liderança da Série A e amplia vantagem', categoria: 'Brasil', tempo: 'Há 1h', resumo: 'Time rubro-negro mantém boa sequência e controla a ponta com mais confiança na fase final do campeonato.' },
+  { titulo: 'Palmeiras reage e se mantém na briga pela liderança', categoria: 'Premier', tempo: 'Há 3h', resumo: 'Equipes da parte alta da tabela seguem alternando a vantagem e aumentando a pressão no G-4.' },
+  { titulo: 'Athletico e Fluminense aumentam pressão no G-4', categoria: 'Análise', tempo: 'Hoje', resumo: 'Ataques dos clubes da região de classificação mostram crescimento e volume ofensivo nas últimas partidas.' },
   { titulo: 'Bahia busca recuperação após revés', categoria: 'Rodada', tempo: 'Há 2h', resumo: 'Clube busca voltar às vitórias e consolidar posição na parte superior da tabela.' },
-  { titulo: 'Cruzeiro investe em reforços para final de temporada', categoria: 'Mercado', tempo: 'Há 4h', resumo: 'Celeste se move no mercado em busca de peças que possam fazer diferença no restante da temporada.' },
+  { titulo: 'Cruzeiro investe em reforços para final de temporada', categoria: 'Mercado', tempo: 'Há 4h', resumo: 'Celeste se move no mercado em busca de peças que possam fazer diferença no restante do campeonato.' },
   { titulo: 'São Paulo trama plano de resgate', categoria: 'Estratégia', tempo: 'Ontem', resumo: 'Tricolor paulista planeja sequência de jogos para recuperar posição e subir na tabela.' }
 ];
 
@@ -46,10 +46,12 @@ const jogosRodada = [
 ];
 
 const proximasPartidas = [
-  { data: '29/10', hora: '18:30', jogo: 'Bahia x Cruzeiro' },
-  { data: '29/10', hora: '20:00', jogo: 'Red Bull Bragantino x Santos' },
-  { data: '30/10', hora: '18:30', jogo: 'Botafogo x Coritiba' },
-  { data: '30/10', hora: '21:00', jogo: 'Fluminense x Mirassol' }
+  { data: '05/11', hora: '18:30', jogo: 'Flamengo x Athletico Paranaense' },
+  { data: '05/11', hora: '20:00', jogo: 'Palmeiras x São Paulo' },
+  { data: '06/11', hora: '18:30', jogo: 'Bahia x Cruzeiro' },
+  { data: '06/11', hora: '21:00', jogo: 'Red Bull Bragantino x Santos' },
+  { data: '07/11', hora: '19:30', jogo: 'Botafogo x Coritiba' },
+  { data: '07/11', hora: '21:00', jogo: 'Fluminense x Mirassol' }
 ];
 
 const videos = [
@@ -82,14 +84,6 @@ const enquete = {
     { nome: 'Athletico Paranaense', percentual: 21 },
     { nome: 'Fluminense', percentual: 14 }
   ]
-};
-
-const state = {
-  table: tabela,
-  filter: 'Todos',
-  matches: jogosRodada,
-  teams: clubes,
-  latestUpdated: new Date()
 };
 
 const teamShortcuts = {
@@ -138,7 +132,53 @@ const teamShieldColors = {
   Chapecoense: '#0f172a'
 };
 
-function constructShield(name, color = '#0d6efd') {
+const state = {
+  table: tabela,
+  filter: 'Todos',
+  matches: jogosRodada,
+  nextMatches: proximasPartidas,
+  teams: clubes,
+  latestUpdated: new Date()
+};
+
+function getTeamBadgeUrl(name) {
+  const badgeMap = {
+    Flamengo: 'https://a.espncdn.com/i/teamlogos/soccer/500/879.png',
+    Palmeiras: 'https://a.espncdn.com/i/teamlogos/soccer/500/882.png',
+    'Athletico Paranaense': 'https://a.espncdn.com/i/teamlogos/soccer/500/875.png',
+    Fluminense: 'https://a.espncdn.com/i/teamlogos/soccer/500/876.png',
+    Bahia: 'https://a.espncdn.com/i/teamlogos/soccer/500/101.png',
+    Cruzeiro: 'https://a.espncdn.com/i/teamlogos/soccer/500/883.png',
+    Santos: 'https://a.espncdn.com/i/teamlogos/soccer/500/879.png',
+    'Atlético Mineiro': 'https://a.espncdn.com/i/teamlogos/soccer/500/990.png',
+    Coritiba: 'https://a.espncdn.com/i/teamlogos/soccer/500/1118.png',
+    'Red Bull Bragantino': 'https://a.espncdn.com/i/teamlogos/soccer/500/1004.png',
+    'São Paulo': 'https://a.espncdn.com/i/teamlogos/soccer/500/874.png',
+    Botafogo: 'https://a.espncdn.com/i/teamlogos/soccer/500/899.png',
+    Vitória: 'https://a.espncdn.com/i/teamlogos/soccer/500/1006.png',
+    Corinthians: 'https://a.espncdn.com/i/teamlogos/soccer/500/874.png',
+    Mirassol: 'https://a.espncdn.com/i/teamlogos/soccer/500/1201.png',
+    'Vasco da Gama': 'https://a.espncdn.com/i/teamlogos/soccer/500/784.png',
+    Grêmio: 'https://a.espncdn.com/i/teamlogos/soccer/500/877.png',
+    Internacional: 'https://a.espncdn.com/i/teamlogos/soccer/500/892.png',
+    Remo: 'https://a.espncdn.com/i/teamlogos/soccer/500/1015.png',
+    Chapecoense: 'https://a.espncdn.com/i/teamlogos/soccer/500/1104.png'
+  };
+
+  return badgeMap[name] || '';
+}
+
+function constructShield(name, color = '#0d6efd', badgeUrl = '') {
+  const resolvedBadge = badgeUrl || getTeamBadgeUrl(name);
+  if (resolvedBadge) {
+    return `
+      <span class="shield-with-badge" aria-label="${name}">
+        <img src="${resolvedBadge}" alt="${name}" class="original-club-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';" />
+        <span class="fallback-shield" aria-hidden="true" style="display:none">${(teamShortcuts[name] || name.slice(0, 3).toUpperCase()).slice(0, 3)}</span>
+      </span>
+    `;
+  }
+
   const initials = teamShortcuts[name] || name.slice(0, 3).toUpperCase();
   const fill = color || teamShieldColors[name] || '#3aa0ff';
 
@@ -184,7 +224,8 @@ function normalizeTable(rawTable) {
       gp: safeNumber(team.goalsfor ?? team.goalsFor ?? team.gf),
       gc: safeNumber(team.goalsagainst ?? team.goalsAgainst ?? team.ga),
       sg: safeNumber(team.goalsdifference ?? team.gd),
-      cor: getColorFromName(team.strTeam || team.name || `time-${index}`)
+      cor: getColorFromName(team.strTeam || team.name || `time-${index}`),
+      badge: team.strTeamBadge || team.strTeamLogo || team.strBadge || getTeamBadgeUrl(team.strTeam || team.name || `Time ${index + 1}`)
     }))
     .slice(0, 20);
 }
@@ -195,7 +236,8 @@ function normalizeTeams(rawTeams) {
     sigla: (teamShortcuts[team.strTeam || team.name] || (team.strTeamShort || team.strTeam?.slice(0, 3).toUpperCase()) || 'TM').toUpperCase(),
     estadio: team.strStadium || 'Estádio local',
     titulos: 0,
-    cor: getColorFromName(team.strTeam || team.name || `time-${index}`)
+    cor: getColorFromName(team.strTeam || team.name || `time-${index}`),
+    badge: team.strTeamBadge || team.strTeamLogo || team.strBadge || getTeamBadgeUrl(team.strTeam || team.name || `Time ${index + 1}`)
   }));
 }
 
@@ -207,7 +249,19 @@ function normalizeMatches(rawEvents) {
     hora: event.strTime || '20:00',
     corA: getColorFromName(event.strHomeTeam || 'Casa'),
     corB: getColorFromName(event.strAwayTeam || 'Visitante'),
-    status: 'Finalizado'
+    status: 'Finalizado',
+    badgeA: event.strHomeTeamBadge || getTeamBadgeUrl(event.strHomeTeam || 'Casa'),
+    badgeB: event.strAwayTeamBadge || getTeamBadgeUrl(event.strAwayTeam || 'Visitante')
+  }));
+}
+
+function normalizeNextMatches(rawEvents) {
+  return rawEvents.slice(0, 6).map((event) => ({
+    data: event.date || event.strDate || 'Próxima',
+    hora: event.strTime || '20:00',
+    jogo: `${event.strHomeTeam || 'Casa'} x ${event.strAwayTeam || 'Visitante'}`,
+    badgeA: event.strHomeTeamBadge || getTeamBadgeUrl(event.strHomeTeam || 'Casa'),
+    badgeB: event.strAwayTeamBadge || getTeamBadgeUrl(event.strAwayTeam || 'Visitante')
   }));
 }
 
@@ -237,6 +291,7 @@ async function loadLiveData() {
 
     if (matchesRes.status === 'fulfilled' && matchesRes.value?.events) {
       state.matches = normalizeMatches(matchesRes.value.events);
+      state.nextMatches = normalizeNextMatches(matchesRes.value.events);
     }
 
     state.latestUpdated = new Date();
@@ -247,11 +302,13 @@ async function loadLiveData() {
     renderClubs();
     renderMatches();
     renderLiveMatches();
+    renderFixtures();
   } catch (error) {
     console.warn('Usando dados locais porque a API não respondeu.', error);
     renderTopStats();
     updateTimestamp();
     renderTable(state.filter);
+    renderFixtures();
   }
 }
 
@@ -320,7 +377,7 @@ function renderTable(filtro = 'Todos') {
           <td>${time.pos}</td>
           <td>
             <div class="team-cell">
-              <span class="team-dot">${constructShield(time.nome, time.cor)}</span>
+              <span class="team-dot">${constructShield(time.nome, time.cor, time.badge)}</span>
               ${time.nome}
             </div>
           </td>
@@ -351,13 +408,13 @@ function renderLiveMatches() {
           <div class="match-status">${partida.status}</div>
           <div class="match-teams">
             <div class="team-info">
-              ${constructShield(partida.mandante, partida.corA)}
+              ${constructShield(partida.mandante, partida.corA, partida.badgeA)}
               <span>${partida.mandante}</span>
             </div>
             <div class="match-score-big">${partida.placar}</div>
             <div class="team-info team-right">
               <span>${partida.visitante}</span>
-              ${constructShield(partida.visitante, partida.corB)}
+              ${constructShield(partida.visitante, partida.corB, partida.badgeB)}
             </div>
           </div>
           <div class="match-time">${partida.hora}</div>
@@ -469,13 +526,13 @@ function renderMatches() {
           </div>
           <div class="match-score">
             <div class="team-meta">
-              <span class="team-mini">${constructShield(partida.mandante, partida.corA)}</span>
+              <span class="team-mini">${constructShield(partida.mandante, partida.corA, partida.badgeA)}</span>
               <span>${partida.mandante}</span>
             </div>
             <div class="score-result">${partida.placar}</div>
             <div class="team-meta team-meta-right">
               <span>${partida.visitante}</span>
-              <span class="team-mini">${constructShield(partida.visitante, partida.corB)}</span>
+              <span class="team-mini">${constructShield(partida.visitante, partida.corB, partida.badgeB)}</span>
             </div>
           </div>
         </article>
@@ -488,7 +545,10 @@ function renderFixtures() {
   const container = document.getElementById('fixtures-list');
   if (!container) return;
 
-  container.innerHTML = proximasPartidas
+  const fixtures = state.nextMatches.length ? state.nextMatches : proximasPartidas;
+
+  container.innerHTML = fixtures
+    .slice(0, 6)
     .map(
       (item) => `
         <div class="fixture-item">
@@ -531,7 +591,7 @@ function renderClubs() {
       (clube) => `
         <article class="club-card">
           <div class="club-header">
-            <span class="club-badge">${constructShield(clube.nome, clube.cor)}</span>
+            <span class="club-badge">${constructShield(clube.nome, clube.cor, clube.badge)}</span>
             <div>
               <div class="club-name">${clube.nome}</div>
               <small>${clube.estadio}</small>
@@ -639,7 +699,7 @@ function setupTableSearch() {
             <td>${time.pos}</td>
             <td>
               <div class="team-cell">
-                <span class="team-dot">${constructShield(time.nome, time.cor)}</span>
+                <span class="team-dot">${constructShield(time.nome, time.cor, time.badge)}</span>
                 ${time.nome}
               </div>
             </td>
@@ -678,4 +738,3 @@ setupThemeToggle();
 setupMobileMenu();
 setupTableSearch();
 loadLiveData();
-
