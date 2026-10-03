@@ -275,6 +275,8 @@ function getSortValue(team, key) {
   switch (key) {
     case 'pos':
       return team.pos;
+    case 'nome':
+      return team.nome;
     case 'pontos':
       return team.pontos;
     case 'jogos':
@@ -317,6 +319,7 @@ function renderTable(filtro = 'Todos') {
     const isActive = header.dataset.sort === state.sortKey;
     header.classList.toggle('sort-active', isActive);
     header.dataset.direction = isActive ? state.sortDirection : 'desc';
+    header.dataset.symbol = isActive ? (state.sortDirection === 'asc' ? '↑' : '↓') : '↕';
   });
 
   body.innerHTML = sortedTimes
@@ -639,7 +642,11 @@ function init() {
   loadLiveData();
 }
 
-init();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 
 window.addEventListener('resize', () => {
   const menu = document.getElementById('mobileMenu');
