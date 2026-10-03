@@ -1,4 +1,4 @@
-:root {
+ :root {
   --bg: #07141f;
   --bg-soft: #0d1f2f;
   --card: rgba(17, 30, 45, 0.8);
@@ -130,11 +130,15 @@ body.light .topbar {
   font-size: 0.9rem;
 }
 
-.main-nav a {
-  transition: color 0.2s ease;
+.main-nav a,
+.mobile-menu a {
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 
-.main-nav a:hover {
+.main-nav a:hover,
+.mobile-menu a:hover,
+.main-nav a.active-link,
+.mobile-menu a.active-link {
   color: var(--text);
 }
 
@@ -503,6 +507,23 @@ body:not(.light) .icon-dark {
   overflow-x: auto;
 }
 
+th[data-sort] {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+}
+
+th[data-sort]::after {
+  content: '↕';
+  margin-left: 6px;
+  opacity: 0.7;
+  font-size: 0.72rem;
+}
+
+th[data-sort].sort-active::after {
+  content: attr(data-direction) === 'asc' ? '↑' : '↓';
+}
+
 table {
   width: 100%;
   min-width: 720px;
@@ -835,18 +856,51 @@ tbody tr:hover {
 }
 
 .poll-option {
+  width: 100%;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--line);
   border-radius: 16px;
   padding: 14px 16px;
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: center;
+  text-align: left;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.poll-option strong {
+.poll-option:hover {
+  transform: translateY(-1px);
+}
+
+.poll-option.selected {
+  border-color: rgba(26, 209, 141, 0.7);
+  box-shadow: 0 0 0 1px rgba(26, 209, 141, 0.2);
+}
+
+.poll-copy {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.poll-copy strong {
   font-weight: 700;
+}
+
+.poll-meter {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.poll-meter span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
 }
 
 .footer {
@@ -932,3 +986,4 @@ tbody tr:hover {
     font-size: 1.5rem;
   }
 }
+

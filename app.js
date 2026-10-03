@@ -101,7 +101,11 @@ const state = {
   filter: 'Todos',
   matches: jogosRodada,
   teams: clubes,
-  latestUpdated: new Date()
+  latestUpdated: new Date(),
+  sortKey: 'pontos',
+  sortDirection: 'desc',
+  pollChoice: '',
+  pollResults: enquete.opcoes.map((option) => ({ ...option }))
 };
 
 const teamShortcuts = {
@@ -242,6 +246,8 @@ async function loadLiveData() {
 
 function renderClubFilters() {
   const container = document.getElementById('clubFilter');
+  if (!container) return;
+
   const clubsList = ['Todos', ...new Set(state.table.map((time) => time.nome))];
 
   container.innerHTML = clubsList
@@ -265,11 +271,55 @@ function renderClubFilters() {
   });
 }
 
+function getSortValue(team, key) {
+  switch (key) {
+    case 'pos':
+      return team.pos;
+    case 'pontos':
+      return team.pontos;
+    case 'jogos':
+      return team.jogos;
+    case 'vitorias':
+      return team.vitorias;
+    case 'empates':
+      return team.empates;
+    case 'derrotas':
+      return team.derrotas;
+    case 'gp':
+      return team.gp;
+    case 'gc':
+      return team.gc;
+    case 'sg':
+      return team.sg;
+    default:
+      return team.pontos;
+  }
+}
+
 function renderTable(filtro = 'Todos') {
   const body = document.getElementById('table-body');
-  const times = filtro === 'Todos' ? state.table : state.table.filter((time) => time.nome === filtro);
+  if (!body) return;
 
-  body.innerHTML = times
+  const times = (filtro === 'Todos' ? state.table : state.table.filter((time) => time.nome === filtro)).slice();
+  const sortedTimes = times.sort((a, b) => {
+    const aValue = getSortValue(a, state.sortKey);
+    const bValue = getSortValue(b, state.sortKey);
+    const direction = state.sortDirection === 'asc' ? 1 : -1;
+
+    if (typeof aValue === 'string' && typeof bValue === 'string') {
+      return aValue.localeCompare(bValue) * direction;
+    }
+
+    return (aValue - bValue) * direction;
+  });
+
+  document.querySelectorAll('th[data-sort]').forEach((header) => {
+    const isActive = header.dataset.sort === state.sortKey;
+    header.classList.toggle('sort-active', isActive);
+    header.dataset.direction = isActive ? state.sortDirection : 'desc';
+  });
+
+  body.innerHTML = sortedTimes
     .map(
       (time) => `
         <tr>
@@ -294,8 +344,29 @@ function renderTable(filtro = 'Todos') {
     .join('');
 }
 
+function renderTopStats() {
+  const container = document.getElementById('top-stats');
+  if (!container) return;
+
+  container.innerHTML = metricas
+    .map(
+      (item) => `
+        <div class="stat-panel">
+          <div class="stat-icon">${item.icon}</div>
+          <div class="stat-info">
+            <strong>${item.valor}</strong>
+            <span>${item.label}</span>
+            <small>${item.detalhe}</small>
+          </div>
+        </div>
+      `
+    )
+    .join('');
+}
+
 function renderScorers() {
   const container = document.getElementById('scorers-grid');
+  if (!container) return;
 
   container.innerHTML = artilheiros
     .map(
@@ -320,6 +391,7 @@ function renderScorers() {
 
 function renderNews() {
   const container = document.getElementById('news-grid');
+  if (!container) return;
 
   container.innerHTML = noticias
     .map(
@@ -341,6 +413,7 @@ function renderNews() {
 
 function renderMatches() {
   const container = document.getElementById('matches-grid');
+  if (!container) return;
 
   container.innerHTML = state.matches
     .map(
@@ -369,6 +442,7 @@ function renderMatches() {
 
 function renderFixtures() {
   const container = document.getElementById('fixtures-list');
+  if (!container) return;
 
   container.innerHTML = proximasPartidas
     .map(
@@ -387,6 +461,7 @@ function renderFixtures() {
 
 function renderVideos() {
   const container = document.getElementById('videos-grid');
+  if (!container) return;
 
   container.innerHTML = videos
     .map(
@@ -403,6 +478,8 @@ function renderVideos() {
 
 function renderClubs() {
   const container = document.getElementById('clubs-grid');
+  if (!container) return;
+
   const clubsToRender = state.teams.length ? state.teams : clubes;
 
   container.innerHTML = clubsToRender.slice(0, 4)
@@ -434,79 +511,139 @@ function renderClubs() {
     .join('');
 }
 
-function renderStats() {
-  const container = document.getElementById('stats-grid');
-
-  container.innerHTML = metricas
-    .map(
-      (item) => `
-        <div class="stat-panel">
-          <div class="stat-icon">${item.icon}</div>
-          <div class="stat-info">
-            <strong>${item.valor}</strong>
-            <span>${item.label}</span>
-            <small>${item.detalhe}</small>
-          </div>
-        </div>
-      `
-    )
-    .join('');
-}
-
 function renderPoll() {
   const container = document.getElementById('poll-card');
+  if (!container) return;
+
+  const optionData = enquete.opcoes.map((option) => {
+    const selected = state.pollChoice === option.nome;
+    const percent = Math.min(selected ? option.percentual + 8 : option.percentual, 96);
+    return { ...option, percent };
+  });
 
   container.innerHTML = `
     <h4 class="poll-question">${enquete.pergunta}</h4>
     <div class="poll-options">
-      ${enquete.opcoes
+      ${optionData
         .map(
           (option) => `
-            <div class="poll-option">
-              <strong>${option.nome}</strong>
-              <span>${option.percentual}%</span>
-            </div>
+            <button type="button" class="poll-option ${state.pollChoice === option.nome ? 'selected' : ''}" data-vote="${option.nome}">
+              <div class="poll-copy">
+                <span>${option.nome}</span>
+                <strong>${option.percentual}%</strong>
+              </div>
+              <div class="poll-meter"><span style="width: ${option.percent}%"></span></div>
+            </button>
           `
         )
         .join('')}
     </div>
   `;
+
+  container.querySelectorAll('.poll-option').forEach((button) => {
+    button.addEventListener('click', () => {
+      state.pollChoice = button.dataset.vote;
+      renderPoll();
+    });
+  });
+}
+
+function setupTableSorting() {
+  document.querySelectorAll('th[data-sort]').forEach((header) => {
+    header.addEventListener('click', () => {
+      const nextSort = header.dataset.sort;
+      if (state.sortKey === nextSort) {
+        state.sortDirection = state.sortDirection === 'asc' ? 'desc' : 'asc';
+      } else {
+        state.sortKey = nextSort;
+        state.sortDirection = nextSort === 'pos' ? 'asc' : 'desc';
+      }
+
+      renderTable(state.filter);
+    });
+  });
 }
 
 function setupThemeToggle() {
   const toggle = document.getElementById('themeToggle');
-  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  if (!toggle) return;
 
-  if (prefersLight) {
+  const savedTheme = localStorage.getItem('portal-theme');
+  if (savedTheme === 'light') {
     document.body.classList.add('light');
   }
 
   toggle.addEventListener('click', () => {
     document.body.classList.toggle('light');
+    localStorage.setItem('portal-theme', document.body.classList.contains('light') ? 'light' : 'dark');
   });
 }
 
 function setupMobileMenu() {
   const btn = document.getElementById('mobileMenuBtn');
   const menu = document.getElementById('mobileMenu');
+  if (!btn || !menu) return;
 
   btn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
   });
+
+  menu.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menu.style.display = 'none';
+    });
+  });
 }
 
-renderTopStats();
-renderClubFilters();
-renderTable();
-renderScorers();
-renderNews();
-renderMatches();
-renderFixtures();
-renderVideos();
-renderClubs();
-renderStats();
-renderPoll();
-updateTimestamp();
-setupThemeToggle();
-setupMobileMenu();
-loadLiveData();
+function setupScrollSpy() {
+  const links = document.querySelectorAll('.main-nav a, .mobile-menu a');
+  const sections = [...document.querySelectorAll('main section[id]')];
+
+  const activate = () => {
+    const scrollPosition = window.scrollY + 130;
+    let current = sections[0]?.id || '';
+
+    sections.forEach((section) => {
+      if (scrollPosition >= section.offsetTop) {
+        current = section.id;
+      }
+    });
+
+    links.forEach((link) => {
+      const isActive = link.getAttribute('href') === `#${current}`;
+      link.classList.toggle('active-link', isActive);
+    });
+  };
+
+  window.addEventListener('scroll', activate);
+  activate();
+}
+
+function init() {
+  renderTopStats();
+  renderClubFilters();
+  renderTable();
+  renderScorers();
+  renderNews();
+  renderMatches();
+  renderFixtures();
+  renderVideos();
+  renderClubs();
+  renderPoll();
+  updateTimestamp();
+  setupThemeToggle();
+  setupMobileMenu();
+  setupTableSorting();
+  setupScrollSpy();
+  setInterval(updateTimestamp, 1000 * 60);
+  loadLiveData();
+}
+
+init();
+
+window.addEventListener('resize', () => {
+  const menu = document.getElementById('mobileMenu');
+  if (menu && window.innerWidth > 980) {
+    menu.style.display = 'none';
+  }
+});
