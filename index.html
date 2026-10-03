@@ -6,7 +6,7 @@
     <title>Portal do Futebol Brasileiro</title>
     <meta
       name="description"
-      content="Portal do Futebol Brasileiro com tabela, artilheiros, notícias, jogos e estatísticas do Brasileirão."
+      content="Portal do Futebol Brasileiro com tabela, artilheiros, notícias, jogos, vídeos, estatísticas e enquetes do Brasileirão."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -27,18 +27,41 @@
           </div>
         </div>
 
-        <nav class="main-nav" aria-label="Navegação principal">
+        <nav class="main-nav desktop-nav" aria-label="Navegação principal">
           <a href="#table">Tabela</a>
           <a href="#scorers">Artilheiros</a>
           <a href="#news">Notícias</a>
           <a href="#matches">Jogos</a>
+          <a href="#videos">Vídeos</a>
           <a href="#clubs">Clubes</a>
           <a href="#stats">Estatísticas</a>
           <a href="#poll">Enquetes</a>
         </nav>
 
-        <button class="cta-button">Assine agora</button>
+        <div class="top-actions">
+          <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+            <span class="icon-light">☀️</span>
+            <span class="icon-dark">🌙</span>
+          </button>
+
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </div>
+
+      <nav class="mobile-menu" id="mobileMenu">
+        <a href="#table">📊 Tabela</a>
+        <a href="#scorers">⚽ Artilheiros</a>
+        <a href="#news">📰 Notícias</a>
+        <a href="#matches">🔥 Jogos</a>
+        <a href="#videos">🎬 Vídeos</a>
+        <a href="#clubs">🏟️ Clubes</a>
+        <a href="#stats">📈 Estatísticas</a>
+        <a href="#poll">🗳️ Enquetes</a>
+      </nav>
     </header>
 
     <main>
@@ -48,7 +71,7 @@
             <span class="eyebrow">Últimas do Brasileirão</span>
             <h2>O portal completo do futebol brasileiro em tempo real.</h2>
             <p>
-              Tabela, artilheiros, jogos da rodada, notícias, clubes e enquetes
+              Tabela, artilheiros, jogos da rodada, notícias, vídeos, clubes e enquetes
               para acompanhar tudo do campeonato nacional em um só lugar.
             </p>
 
@@ -104,10 +127,20 @@
             <span class="eyebrow">COMPETIÇÃO</span>
             <h3>Brasileirão</h3>
           </div>
-          <span class="pill">Atualizado há 10 min</span>
+          <span class="pill" id="update-time">Atualizado há 10 min</span>
         </div>
 
         <div class="stat-grid" id="top-stats"></div>
+      </section>
+
+      <section class="section container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">FILTROS</span>
+            <h3>Escolha seu clube</h3>
+          </div>
+        </div>
+        <div class="club-filter" id="clubFilter"></div>
       </section>
 
       <section id="table" class="section container">
@@ -120,23 +153,25 @@
         </div>
 
         <div class="table-card">
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Clube</th>
-                <th>P</th>
-                <th>J</th>
-                <th>V</th>
-                <th>E</th>
-                <th>D</th>
-                <th>GP</th>
-                <th>GC</th>
-                <th>SG</th>
-              </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-          </table>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Clube</th>
+                  <th>P</th>
+                  <th>J</th>
+                  <th>V</th>
+                  <th>E</th>
+                  <th>D</th>
+                  <th>GP</th>
+                  <th>GC</th>
+                  <th>SG</th>
+                </tr>
+              </thead>
+              <tbody id="table-body"></tbody>
+            </table>
+          </div>
         </div>
       </section>
 
@@ -184,6 +219,18 @@
           </div>
           <div id="fixtures-list" class="fixtures-list"></div>
         </div>
+      </section>
+
+      <section id="videos" class="section container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">MÍDIA</span>
+            <h3>Vídeos em destaque</h3>
+          </div>
+          <span class="pill">Assista agora</span>
+        </div>
+
+        <div id="videos-grid" class="videos-grid"></div>
       </section>
 
       <section id="clubs" class="section container">

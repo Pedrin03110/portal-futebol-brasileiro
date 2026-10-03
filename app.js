@@ -64,6 +64,12 @@ const proximasPartidas = [
   { data: '30/10', hora: '21:00', jogo: 'Fluminense x Juventude' }
 ];
 
+const videos = [
+  { titulo: 'Melhores momentos: Palmeiras 2x1 Flamengo', tempo: '3:12', categoria: 'Resumo' },
+  { titulo: 'Análise da rodada: G-4 e rebaixamento', tempo: '4:48', categoria: 'Debate' },
+  { titulo: 'Gol do dia: Hulk marca golaço para o Atlético', tempo: '1:36', categoria: 'Gol' }
+];
+
 const clubes = [
   { nome: 'Palmeiras', sigla: 'PAL', estadio: 'Allianz Parque', titulos: 12, cor: '#0f9d8c' },
   { nome: 'Flamengo', sigla: 'FLA', estadio: 'Maracanã', titulos: 8, cor: '#d91d1d' },
@@ -90,12 +96,7 @@ const enquete = {
   ]
 };
 
-const statsByLabel = [
-  { label: 'Rendimento em casa', value: 74 },
-  { label: 'Rendimento fora', value: 54 },
-  { label: 'Finalizações certeiras', value: 62 },
-  { label: 'Defesa sem sofrer', value: 48 }
-];
+const clubesFiltro = ['Todos', ...new Set(tabela.map((time) => time.nome))];
 
 function renderTopStats() {
   const container = document.getElementById('top-stats');
@@ -123,10 +124,34 @@ function renderTopStats() {
     .join('');
 }
 
-function renderTable() {
-  const body = document.getElementById('table-body');
+function renderClubFilters() {
+  const container = document.getElementById('clubFilter');
 
-  body.innerHTML = tabela
+  container.innerHTML = clubesFiltro
+    .map(
+      (clube, index) => `
+        <button class="filter-pill ${index === 0 ? 'active' : ''}" data-clube="${clube}">
+          ${clube}
+        </button>
+      `
+    )
+    .join('');
+
+  container.querySelectorAll('.filter-pill').forEach((button) => {
+    button.addEventListener('click', () => {
+      const selected = button.dataset.clube;
+      container.querySelectorAll('.filter-pill').forEach((pill) => pill.classList.remove('active'));
+      button.classList.add('active');
+      renderTable(selected);
+    });
+  });
+}
+
+function renderTable(filtro = 'Todos') {
+  const body = document.getElementById('table-body');
+  const times = filtro === 'Todos' ? tabela : tabela.filter((time) => time.nome === filtro);
+
+  body.innerHTML = times
     .map(
       (time) => `
         <tr>
@@ -242,6 +267,22 @@ function renderFixtures() {
     .join('');
 }
 
+function renderVideos() {
+  const container = document.getElementById('videos-grid');
+
+  container.innerHTML = videos
+    .map(
+      (video) => `
+        <article class="video-card">
+          <div class="video-thumb"></div>
+          <h4>${video.titulo}</h4>
+          <div class="video-meta">${video.categoria} • ${video.tempo}</div>
+        </article>
+      `
+    )
+    .join('');
+}
+
 function renderClubs() {
   const container = document.getElementById('clubs-grid');
 
@@ -313,12 +354,38 @@ function renderPoll() {
   `;
 }
 
+function setupThemeToggle() {
+  const toggle = document.getElementById('themeToggle');
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+  if (prefersLight) {
+    document.body.classList.add('light');
+  }
+
+  toggle.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+  });
+}
+
+function setupMobileMenu() {
+  const btn = document.getElementById('mobileMenuBtn');
+  const menu = document.getElementById('mobileMenu');
+
+  btn.addEventListener('click', () => {
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+  });
+}
+
 renderTopStats();
+renderClubFilters();
 renderTable();
 renderScorers();
 renderNews();
 renderMatches();
 renderFixtures();
+renderVideos();
 renderClubs();
 renderStats();
 renderPoll();
+setupThemeToggle();
+setupMobileMenu();
