@@ -3,47 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portal do Futebol Brasileiro</title>
-    <meta
-      name="description"
-      content="Portal do Futebol Brasileiro com tabela, artilheiros, notícias, jogos, vídeos, estatísticas e enquetes do Brasileirão."
-    />
+    <title>BRASILEIRÃO 2026 - Portal Elite do Futebol Brasileiro</title>
+    <meta name="description" content="Portal premium do Futebol Brasileiro com tabela ao vivo, artilheiros, notícias, jogos, estatísticas avançadas e enquetes interativas." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <!-- TOPBAR PREMIUM -->
     <header class="topbar">
       <div class="container nav">
         <div class="brand">
-          <div class="brand-mark">⚽</div>
+          <div class="brand-mark-animated">⚽</div>
           <div>
-            <span class="brand-tag">BRASILEIRÃO</span>
-            <h1>Portal do Futebol</h1>
+            <span class="brand-tag">🏆 BRASILEIRÃO 2026</span>
+            <h1>PORTAL ELITE</h1>
           </div>
         </div>
 
         <nav class="main-nav desktop-nav" aria-label="Navegação principal">
-          <a href="#table">Tabela</a>
-          <a href="#scorers">Artilheiros</a>
-          <a href="#news">Notícias</a>
-          <a href="#matches">Jogos</a>
-          <a href="#videos">Vídeos</a>
-          <a href="#clubs">Clubes</a>
-          <a href="#stats">Estatísticas</a>
-          <a href="#poll">Enquetes</a>
+          <a href="#live-tab" class="nav-link active-nav">
+            <i class="fas fa-fire"></i> AO VIVO
+          </a>
+          <a href="#table-tab" class="nav-link">
+            <i class="fas fa-table"></i> TABELA
+          </a>
+          <a href="#scorers-tab" class="nav-link">
+            <i class="fas fa-crown"></i> ARTILHEIROS
+          </a>
+          <a href="#news-tab" class="nav-link">
+            <i class="fas fa-newspaper"></i> NOTÍCIAS
+          </a>
+          <a href="#stats-tab" class="nav-link">
+            <i class="fas fa-chart-bar"></i> STATS
+          </a>
+          <a href="#poll-tab" class="nav-link">
+            <i class="fas fa-poll"></i> ENQUETES
+          </a>
         </nav>
 
         <div class="top-actions">
+          <div class="live-indicator">
+            <span class="pulse"></span>
+            AO VIVO
+          </div>
           <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
             <span class="icon-light">☀️</span>
             <span class="icon-dark">🌙</span>
           </button>
-
           <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Abrir menu">
             <span></span>
             <span></span>
@@ -51,229 +60,205 @@
           </button>
         </div>
       </div>
-
-      <nav class="mobile-menu" id="mobileMenu">
-        <a href="#table">📊 Tabela</a>
-        <a href="#scorers">⚽ Artilheiros</a>
-        <a href="#news">📰 Notícias</a>
-        <a href="#matches">🔥 Jogos</a>
-        <a href="#videos">🎬 Vídeos</a>
-        <a href="#clubs">🏟️ Clubes</a>
-        <a href="#stats">📈 Estatísticas</a>
-        <a href="#poll">🗳️ Enquetes</a>
-      </nav>
     </header>
 
-    <main>
-      <section class="hero">
-        <div class="container hero-grid">
-          <div class="hero-copy">
-            <span class="eyebrow">Últimas do Brasileirão</span>
-            <h2>O portal completo do futebol brasileiro em tempo real.</h2>
-            <p>
-              Tabela, artilheiros, jogos da rodada, notícias, vídeos, clubes e enquetes
-              para acompanhar tudo do campeonato nacional em um só lugar.
-            </p>
+    <!-- MOBILE MENU -->
+    <nav class="mobile-menu" id="mobileMenu">
+      <a href="#live-tab">AO VIVO</a>
+      <a href="#table-tab">TABELA</a>
+      <a href="#scorers-tab">ARTILHEIROS</a>
+      <a href="#news-tab">NOTÍCIAS</a>
+      <a href="#stats-tab">STATS</a>
+      <a href="#poll-tab">ENQUETES</a>
+    </nav>
 
-            <div class="hero-actions">
-              <a href="#table" class="primary-btn">Ver tabela</a>
-              <a href="#matches" class="secondary-btn">Jogos da rodada</a>
+    <!-- HERO SECTION COM DESTAQUE -->
+    <section class="hero-section" id="live-tab">
+      <div class="hero-gradient"></div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">RODADA 28 - TEMPORADA 2026</div>
+          <h2>Acompanhe o Brasileirão em Tempo Real</h2>
+          <p>Tabelas atualizadas, artilheiros, notícias e estatísticas ao vivo do maior campeonato do Brasil</p>
+          
+          <div class="live-matches-preview">
+            <div class="matches-header">
+              <h3>🔴 JOGOS DE HOJE</h3>
+              <span class="update-time" id="update-time">Atualizado agora</span>
             </div>
-
-            <div class="hero-stats">
-              <div>
-                <strong>20</strong>
-                <span>clubes</span>
-              </div>
-              <div>
-                <strong>38</strong>
-                <span>rodadas</span>
-              </div>
-              <div>
-                <strong>+1,3k</strong>
-                <span>gols</span>
-              </div>
+            <div class="live-grid" id="live-matches-container">
+              <!-- Preenchido por JS -->
             </div>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div class="hero-card">
-            <div class="mini-header">
-              <span class="live-dot"></span>
-              <span>Rodada 28</span>
+    <!-- TABELA INTERATIVA -->
+    <section class="table-section" id="table-tab">
+      <div class="container">
+        <div class="section-header">
+          <h2>📊 TABELA DE CLASSIFICAÇÃO</h2>
+          <div class="table-controls">
+            <input type="text" id="tableSearch" placeholder="🔍 Buscar time..." class="table-search">
+            <div class="filter-pills" id="clubFilter"></div>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th style="width: 5%">POS</th>
+                <th style="width: 30%">TIME</th>
+                <th>PTS</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+                <th style="width: 8%">%</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+
+        <div class="table-legend">
+          <span><i class="fas fa-trophy" style="color: #ffd700;"></i> Campeão</span>
+          <span><i class="fas fa-medal" style="color: #c0c0c0;"></i> Libertadores</span>
+          <span><i class="fas fa-star" style="color: #87ceeb;"></i> Sul-Americana</span>
+          <span><i class="fas fa-arrow-down" style="color: #ff6b6b;"></i> Rebaixamento</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTILHEIROS DESTAQUE -->
+    <section class="scorers-section" id="scorers-tab">
+      <div class="container">
+        <div class="section-header">
+          <h2>👑 REI DOS GOLS - ARTILHEIROS</h2>
+          <p>Melhores marcadores da temporada 2026</p>
+        </div>
+
+        <div class="scorers-grid" id="scorers-grid"></div>
+      </div>
+    </section>
+
+    <!-- NOTÍCIAS E DESTAQUES -->
+    <section class="news-section" id="news-tab">
+      <div class="container">
+        <div class="section-header">
+          <h2>📰 NOTÍCIAS E DESTAQUES</h2>
+          <p>Fique por dentro das principais novidades do Brasileirão</p>
+        </div>
+
+        <div class="news-featured">
+          <article class="news-hero" id="news-hero"></article>
+          <div class="news-secondary-grid" id="news-secondary"></div>
+        </div>
+
+        <div class="news-grid" id="news-grid"></div>
+      </div>
+    </section>
+
+    <!-- JOGOS E PRÓXIMAS PARTIDAS -->
+    <section class="matches-section">
+      <div class="container">
+        <div class="matches-two-column">
+          <!-- JOGOS RECENTES -->
+          <div class="matches-panel">
+            <div class="panel-header">
+              <h3>⚽ JOGOS RECENTES</h3>
+              <span class="badge-info">Rodada 28</span>
             </div>
+            <div class="matches-list" id="matches-grid"></div>
+          </div>
 
-            <div class="highlight-match">
-              <div class="team-badge club-red">PAL</div>
-              <div class="score-box">
-                <strong>2</strong>
-                <span>x</span>
-                <strong>1</strong>
-              </div>
-              <div class="team-badge club-blue">FLA</div>
+          <!-- PRÓXIMAS PARTIDAS -->
+          <div class="matches-panel">
+            <div class="panel-header">
+              <h3>📅 PRÓXIMAS PARTIDAS</h3>
+              <span class="badge-info">Rodada 29</span>
             </div>
-
-            <ul class="match-list">
-              <li><span>Fortaleza</span><strong>1 - 0</strong><span>São Paulo</span></li>
-              <li><span>Grêmio</span><strong>2 - 2</strong><span>Internacional</span></li>
-              <li><span>Vasco</span><strong>1 - 3</strong><span>Atlético-MG</span></li>
-            </ul>
+            <div class="fixtures-list" id="fixtures-list"></div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section container">
+    <!-- VÍDEOS DESTACADOS -->
+    <section class="videos-section">
+      <div class="container">
         <div class="section-header">
-          <div>
-            <span class="eyebrow">COMPETIÇÃO</span>
-            <h3>Brasileirão</h3>
-          </div>
-          <span class="pill" id="update-time">Atualizado há 10 min</span>
+          <h2>🎥 VÍDEOS EM DESTAQUE</h2>
+          <p>Melhores momentos e análises do campeonato</p>
         </div>
+        <div class="videos-grid" id="videos-grid"></div>
+      </div>
+    </section>
 
-        <div class="stat-grid" id="top-stats"></div>
-      </section>
-
-      <section class="section container">
+    <!-- CLUBES DESTAQUE -->
+    <section class="clubs-section">
+      <div class="container">
         <div class="section-header">
-          <div>
-            <span class="eyebrow">FILTROS</span>
-            <h3>Escolha seu clube</h3>
-          </div>
+          <h2>🏟️ CLUBES DO BRASILEIRÃO</h2>
+          <p>Informações e posição atual dos times da Série A</p>
         </div>
-        <div class="club-filter" id="clubFilter"></div>
-      </section>
+        <div class="clubs-grid" id="clubs-grid"></div>
+      </div>
+    </section>
 
-      <section id="table" class="section container">
+    <!-- ESTATÍSTICAS AVANÇADAS -->
+    <section class="stats-section" id="stats-tab">
+      <div class="container">
         <div class="section-header">
-          <div>
-            <span class="eyebrow">TABELA</span>
-            <h3>Classificação</h3>
-          </div>
-          <span class="pill">Rodada 28</span>
+          <h2>📈 ESTATÍSTICAS AVANÇADAS</h2>
+          <p>Análise profunda da temporada 2026</p>
         </div>
+        <div class="stats-grid" id="stats-grid"></div>
+      </div>
+    </section>
 
-        <div class="table-card">
-          <div class="table-scroll">
-            <table>
-              <thead>
-                <tr>
-                  <th data-sort="pos">#</th>
-                  <th data-sort="nome">Clube</th>
-                  <th data-sort="pontos">P</th>
-                  <th data-sort="jogos">J</th>
-                  <th data-sort="vitorias">V</th>
-                  <th data-sort="empates">E</th>
-                  <th data-sort="derrotas">D</th>
-                  <th data-sort="gp">GP</th>
-                  <th data-sort="gc">GC</th>
-                  <th data-sort="sg">SG</th>
-                </tr>
-              </thead>
-              <tbody id="table-body"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section id="scorers" class="section container">
+    <!-- ENQUETE INTERATIVA -->
+    <section class="poll-section" id="poll-tab">
+      <div class="container">
         <div class="section-header">
-          <div>
-            <span class="eyebrow">ARTILHARIA</span>
-            <h3>Top 5 artilheiros</h3>
-          </div>
-          <span class="pill">Gols no Brasileirão</span>
+          <h2>🗳️ ENQUETE INTERATIVA</h2>
+          <p>Vote e veja o resultado em tempo real</p>
         </div>
-
-        <div id="scorers-grid" class="card-grid"></div>
-      </section>
-
-      <section id="news" class="section container">
-        <div class="section-header">
-          <div>
-            <span class="eyebrow">NOTÍCIAS</span>
-            <h3>Últimas manchetes</h3>
-          </div>
-          <span class="pill">Acompanhe</span>
+        <div class="poll-wrapper">
+          <div id="poll-card"></div>
         </div>
+      </div>
+    </section>
 
-        <div id="news-grid" class="news-grid"></div>
-      </section>
-
-      <section id="matches" class="section container two-column-layout">
-        <div>
-          <div class="section-header compact">
-            <div>
-              <span class="eyebrow">RODADA</span>
-              <h3>Jogos da rodada</h3>
-            </div>
-          </div>
-          <div id="matches-grid" class="matches-panel"></div>
-        </div>
-
-        <div>
-          <div class="section-header compact">
-            <div>
-              <span class="eyebrow">PRÓXIMOS</span>
-              <h3>Próximas partidas</h3>
-            </div>
-          </div>
-          <div id="fixtures-list" class="fixtures-list"></div>
-        </div>
-      </section>
-
-      <section id="videos" class="section container">
-        <div class="section-header">
-          <div>
-            <span class="eyebrow">MÍDIA</span>
-            <h3>Vídeos em destaque</h3>
-          </div>
-          <span class="pill">Assista agora</span>
-        </div>
-
-        <div id="videos-grid" class="videos-grid"></div>
-      </section>
-
-      <section id="clubs" class="section container">
-        <div class="section-header">
-          <div>
-            <span class="eyebrow">CLUBES</span>
-            <h3>Informações dos clubes</h3>
-          </div>
-          <span class="pill">Foco no Brasileirão</span>
-        </div>
-
-        <div id="clubs-grid" class="club-grid"></div>
-      </section>
-
-      <section id="stats" class="section container">
-        <div class="section-header">
-          <div>
-            <span class="eyebrow">ESTATÍSTICAS</span>
-            <h3>Dados de rendimento</h3>
-          </div>
-          <span class="pill">Temporada</span>
-        </div>
-
-        <div id="stats-grid" class="stats-grid"></div>
-      </section>
-
-      <section id="poll" class="section container">
-        <div class="section-header">
-          <div>
-            <span class="eyebrow">TORCIDA</span>
-            <h3>Enquetes entre torcedores</h3>
-          </div>
-          <span class="pill">Vota e opine</span>
-        </div>
-
-        <div id="poll-card" class="poll-card"></div>
-      </section>
-    </main>
-
+    <!-- FOOTER -->
     <footer class="footer">
-      <div class="container footer-inner">
-        <p>© 2026 Portal do Futebol Brasileiro</p>
-        <p>Brasileirão • Notícias • Estatísticas • Enquetes</p>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-brand">
+            <h3>⚽ PORTAL ELITE</h3>
+            <p>O melhor acompanhamento do Brasileirão 2026 em tempo real</p>
+          </div>
+          <div class="footer-links">
+            <h4>Navegação</h4>
+            <a href="#live-tab">Ao Vivo</a>
+            <a href="#table-tab">Tabela</a>
+            <a href="#stats-tab">Estatísticas</a>
+          </div>
+          <div class="footer-info">
+            <h4>Informações</h4>
+            <p>Dados atualizados via TheSportsDB API</p>
+            <p>Tema: Claro/Escuro automático</p>
+            <p>© 2026 Portal Elite Futebol</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>Desenvolvido com ❤️ para os amantes do futebol brasileiro</p>
+        </div>
       </div>
     </footer>
 
