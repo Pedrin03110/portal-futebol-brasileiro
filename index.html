@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal do Futebol Brasileiro</title>
+    <meta
+      name="description"
+      content="Portal do Futebol Brasileiro com tabela, artilheiros, notícias, jogos e estatísticas do Brasileirão."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <div class="brand">
+          <div class="brand-mark">⚽</div>
+          <div>
+            <span class="brand-tag">BRASILEIRÃO</span>
+            <h1>Portal do Futebol</h1>
+          </div>
+        </div>
+
+        <nav class="main-nav" aria-label="Navegação principal">
+          <a href="#table">Tabela</a>
+          <a href="#scorers">Artilheiros</a>
+          <a href="#news">Notícias</a>
+          <a href="#matches">Jogos</a>
+          <a href="#clubs">Clubes</a>
+          <a href="#stats">Estatísticas</a>
+          <a href="#poll">Enquetes</a>
+        </nav>
+
+        <button class="cta-button">Assine agora</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">Últimas do Brasileirão</span>
+            <h2>O portal completo do futebol brasileiro em tempo real.</h2>
+            <p>
+              Tabela, artilheiros, jogos da rodada, notícias, clubes e enquetes
+              para acompanhar tudo do campeonato nacional em um só lugar.
+            </p>
+
+            <div class="hero-actions">
+              <a href="#table" class="primary-btn">Ver tabela</a>
+              <a href="#matches" class="secondary-btn">Jogos da rodada</a>
+            </div>
+
+            <div class="hero-stats">
+              <div>
+                <strong>20</strong>
+                <span>clubes</span>
+              </div>
+              <div>
+                <strong>38</strong>
+                <span>rodadas</span>
+              </div>
+              <div>
+                <strong>+1,3k</strong>
+                <span>gols</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-card">
+            <div class="mini-header">
+              <span class="live-dot"></span>
+              <span>Rodada 28</span>
+            </div>
+
+            <div class="highlight-match">
+              <div class="team-badge club-red">PAL</div>
+              <div class="score-box">
+                <strong>2</strong>
+                <span>x</span>
+                <strong>1</strong>
+              </div>
+              <div class="team-badge club-blue">FLA</div>
+            </div>
+
+            <ul class="match-list">
+              <li><span>Fortaleza</span><strong>1 - 0</strong><span>São Paulo</span></li>
+              <li><span>Grêmio</span><strong>2 - 2</strong><span>Internacional</span></li>
+              <li><span>Vasco</span><strong>1 - 3</strong><span>Atlético-MG</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">COMPETIÇÃO</span>
+            <h3>Brasileirão</h3>
+          </div>
+          <span class="pill">Atualizado há 10 min</span>
+        </div>
+
+        <div class="stat-grid" id="top-stats"></div>
+      </section>
+
+      <section id="table" class="section container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">TABELA</span>
+            <h3>Classificação</h3>
+          </div>
+          <span class="pill">Rodada 28</span>
+        </div>
+
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Clube</th>
+                <th>P</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="scorers" class="section container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">ARTILHARIA</span>
+            <h3>Top 5 artilheiros</h3>
+          </div>
+          <span class="pill">Gols no Brasileirão</span>
+        </div>
+
+        <div id="scorers-grid" class="card-grid"></div>
+      </section>
+
+      <section id="news" class="section container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">NOTÍCIAS</span>
+            <h3>Últimas manchetes</h3>
+          </div>
+          <span class="pill">Acompanhe</span>
+        </div>
+
+        <div id="news-grid" class="news-grid"></div>
+      </section>
+
+      <section id="matches" class="section container two-column-layout">
+        <div>
+          <div class="section-header compact">
+            <div>
+              <span class="eyebrow">RODADA</span>
+              <h3>Jogos da rodada</h3>
+            </div>
+          </div>
+          <div id="matches-grid" class="matches-panel"></div>
+        </div>
+
+        <div>
+          <div class="section-header compact">
+            <div>
+              <span class="eyebrow">PRÓXIMOS</span>
+              <h3>Próximas partidas</h3>
+            </div>
+          </div>
+          <div id="fixtures-list" class="fixtures-list"></div>
+        </div>
+      </section>
+
+      <section id="clubs" class="section container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">CLUBES</span>
+            <h3>Informações dos clubes</h3>
+          </div>
+          <span class="pill">Foco no Brasileirão</span>
+        </div>
+
+        <div id="clubs-grid" class="club-grid"></div>
+      </section>
+
+      <section id="stats" class="section container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">ESTATÍSTICAS</span>
+            <h3>Dados de rendimento</h3>
+          </div>
+          <span class="pill">Temporada</span>
+        </div>
+
+        <div id="stats-grid" class="stats-grid"></div>
+      </section>
+
+      <section id="poll" class="section container">
+        <div class="section-header">
+          <div>
+            <span class="eyebrow">TORCIDA</span>
+            <h3>Enquetes entre torcedores</h3>
+          </div>
+          <span class="pill">Vota e opine</span>
+        </div>
+
+        <div id="poll-card" class="poll-card"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <p>© 2026 Portal do Futebol Brasileiro</p>
+        <p>Brasileirão • Notícias • Estatísticas • Enquetes</p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
