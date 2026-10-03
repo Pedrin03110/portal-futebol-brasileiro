@@ -47,14 +47,32 @@ const noticias = [
     categoria: 'Análise',
     tempo: 'Hoje',
     resumo: 'Ataques dos clubes da região de classificação mostram crescimento e volume ofensivo.'
+  },
+  {
+    titulo: 'Bahia busca recuperação após revés',
+    categoria: 'Rodada',
+    tempo: 'Há 2h',
+    resumo: 'Clube busca voltar às vitórias e consolidar posição na parte superior da tabela.'
+  },
+  {
+    titulo: 'Cruzeiro investe em reforços para final de temporada',
+    categoria: 'Mercado',
+    tempo: 'Há 4h',
+    resumo: 'Celeste se move no mercado em busca de peças que possam fazer diferença no restante da temporada.'
+  },
+  {
+    titulo: 'São Paulo trama plano de resgate',
+    categoria: 'Estratégia',
+    tempo: 'Ontem',
+    resumo: 'Tricolor paulista planeja sequência de jogos para recuperar posição e subir na tabela.'
   }
 ];
 
 const jogosRodada = [
-  { mandante: 'Flamengo', visitante: 'Palmeiras', placar: '2 - 1', hora: '18:30', corA: '#d91d1d', corB: '#0f9d8c' },
-  { mandante: 'Athletico Paranaense', visitante: 'Fluminense', placar: '1 - 0', hora: '20:00', corA: '#d41c2d', corB: '#5ca6ea' },
-  { mandante: 'Cruzeiro', visitante: 'Bahia', placar: '2 - 2', hora: '21:00', corA: '#7a2dff', corB: '#0da96a' },
-  { mandante: 'Vasco da Gama', visitante: 'Atlético Mineiro', placar: '1 - 3', hora: '19:30', corA: '#f3d409', corB: '#0a5ec9' }
+  { mandante: 'Flamengo', visitante: 'Palmeiras', placar: '2 - 1', hora: '18:30', corA: '#d91d1d', corB: '#0f9d8c', status: 'Finalizado' },
+  { mandante: 'Athletico Paranaense', visitante: 'Fluminense', placar: '1 - 0', hora: '20:00', corA: '#d41c2d', corB: '#5ca6ea', status: 'Finalizado' },
+  { mandante: 'Cruzeiro', visitante: 'Bahia', placar: '2 - 2', hora: '21:00', corA: '#7a2dff', corB: '#0da96a', status: 'Finalizado' },
+  { mandante: 'Vasco da Gama', visitante: 'Atlético Mineiro', placar: '1 - 3', hora: '19:30', corA: '#f3d409', corB: '#0a5ec9', status: 'Finalizado' }
 ];
 
 const proximasPartidas = [
@@ -195,7 +213,8 @@ function normalizeMatches(rawEvents) {
     placar: `${safeNumber(event.intHomeScore)} - ${safeNumber(event.intAwayScore)}`,
     hora: event.strTime || '20:00',
     corA: getColorFromName(event.strHomeTeam || 'Casa'),
-    corB: getColorFromName(event.strAwayTeam || 'Visitante')
+    corB: getColorFromName(event.strAwayTeam || 'Visitante'),
+    status: 'Finalizado'
   }));
 }
 
@@ -280,7 +299,7 @@ function renderTable(filtro = 'Todos') {
               ${time.nome}
             </div>
           </td>
-          <td>${time.pontos}</td>
+          <td><strong>${time.pontos}</strong></td>
           <td>${time.jogos}</td>
           <td>${time.vitorias}</td>
           <td>${time.empates}</td>
@@ -288,7 +307,35 @@ function renderTable(filtro = 'Todos') {
           <td>${time.gp}</td>
           <td>${time.gc}</td>
           <td>${time.sg}</td>
+          <td>${((time.pontos / (time.jogos * 3)) * 100).toFixed(1)}%</td>
         </tr>
+      `
+    )
+    .join('');
+}
+
+function renderLiveMatches() {
+  const container = document.getElementById('live-matches-container');
+  if (!container) return;
+
+  container.innerHTML = state.matches
+    .map(
+      (partida) => `
+        <div class="live-match-card">
+          <div class="match-status">${partida.status}</div>
+          <div class="match-teams">
+            <div class="team-info">
+              ${constructShield(partida.mandante, partida.corA)}
+              <span>${partida.mandante}</span>
+            </div>
+            <div class="match-score-big">${partida.placar}</div>
+            <div class="team-info">
+              <span>${partida.visitante}</span>
+              ${constructShield(partida.visitante, partida.corB)}
+            </div>
+          </div>
+          <div class="match-time">${partida.hora}</div>
+        </div>
       `
     )
     .join('');
@@ -318,10 +365,51 @@ function renderScorers() {
     .join('');
 }
 
+function renderNewsHero() {
+  const container = document.getElementById('news-hero');
+  if (!container || noticias.length === 0) return;
+
+  const noticia = noticias[0];
+  container.innerHTML = `
+    <div class="news-thumb-large"></div>
+    <div class="news-hero-content">
+      <div class="news-tag">${noticia.categoria}</div>
+      <h3>${noticia.titulo}</h3>
+      <p>${noticia.resumo}</p>
+      <div class="news-meta">
+        <span>${noticia.tempo}</span>
+        <span>Leitura 5 min</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderNewsSecondary() {
+  const container = document.getElementById('news-secondary');
+  if (!container || noticias.length < 2) return;
+
+  container.innerHTML = noticias
+    .slice(1, 3)
+    .map(
+      (item) => `
+        <article class="news-secondary-card">
+          <div class="news-thumb-small"></div>
+          <div>
+            <div class="news-tag">${item.categoria}</div>
+            <h5>${item.titulo}</h5>
+            <span class="news-meta-small">${item.tempo}</span>
+          </div>
+        </article>
+      `
+    )
+    .join('');
+}
+
 function renderNews() {
   const container = document.getElementById('news-grid');
 
   container.innerHTML = noticias
+    .slice(3)
     .map(
       (item) => `
         <article class="news-card">
@@ -347,7 +435,7 @@ function renderMatches() {
       (partida) => `
         <article class="match-card">
           <div class="match-top">
-            <span>Rodada atual</span>
+            <span>Rodada 28</span>
             <span>${partida.hora}</span>
           </div>
           <div class="match-score">
@@ -495,10 +583,13 @@ function setupMobileMenu() {
   });
 }
 
-renderTopStats();
+// Inicializar todas as funções
+renderLiveMatches();
 renderClubFilters();
 renderTable();
 renderScorers();
+renderNewsHero();
+renderNewsSecondary();
 renderNews();
 renderMatches();
 renderFixtures();
