@@ -252,6 +252,7 @@ async function loadLiveData() {
     renderClubFilters();
     renderClubs();
     renderMatches();
+    renderLiveMatches();
   } catch (error) {
     console.warn('Usando dados locais porque a API não respondeu.', error);
     updateTimestamp();
@@ -261,6 +262,8 @@ async function loadLiveData() {
 
 function renderClubFilters() {
   const container = document.getElementById('clubFilter');
+  if (!container) return;
+
   const clubsList = ['Todos', ...new Set(state.table.map((time) => time.nome))];
 
   container.innerHTML = clubsList
@@ -286,6 +289,8 @@ function renderClubFilters() {
 
 function renderTable(filtro = 'Todos') {
   const body = document.getElementById('table-body');
+  if (!body) return;
+
   const times = filtro === 'Todos' ? state.table : state.table.filter((time) => time.nome === filtro);
 
   body.innerHTML = times
@@ -319,6 +324,7 @@ function renderLiveMatches() {
   if (!container) return;
 
   container.innerHTML = state.matches
+    .slice(0, 4)
     .map(
       (partida) => `
         <div class="live-match-card">
@@ -329,7 +335,7 @@ function renderLiveMatches() {
               <span>${partida.mandante}</span>
             </div>
             <div class="match-score-big">${partida.placar}</div>
-            <div class="team-info">
+            <div class="team-info team-right">
               <span>${partida.visitante}</span>
               ${constructShield(partida.visitante, partida.corB)}
             </div>
@@ -343,6 +349,7 @@ function renderLiveMatches() {
 
 function renderScorers() {
   const container = document.getElementById('scorers-grid');
+  if (!container) return;
 
   container.innerHTML = artilheiros
     .map(
@@ -407,6 +414,7 @@ function renderNewsSecondary() {
 
 function renderNews() {
   const container = document.getElementById('news-grid');
+  if (!container) return;
 
   container.innerHTML = noticias
     .slice(3)
@@ -429,6 +437,7 @@ function renderNews() {
 
 function renderMatches() {
   const container = document.getElementById('matches-grid');
+  if (!container) return;
 
   container.innerHTML = state.matches
     .map(
@@ -444,7 +453,7 @@ function renderMatches() {
               <span>${partida.mandante}</span>
             </div>
             <div class="score-result">${partida.placar}</div>
-            <div class="team-meta" style="justify-content:flex-end;">
+            <div class="team-meta team-meta-right">
               <span>${partida.visitante}</span>
               <span class="team-mini">${constructShield(partida.visitante, partida.corB)}</span>
             </div>
@@ -457,6 +466,7 @@ function renderMatches() {
 
 function renderFixtures() {
   const container = document.getElementById('fixtures-list');
+  if (!container) return;
 
   container.innerHTML = proximasPartidas
     .map(
@@ -475,6 +485,7 @@ function renderFixtures() {
 
 function renderVideos() {
   const container = document.getElementById('videos-grid');
+  if (!container) return;
 
   container.innerHTML = videos
     .map(
@@ -491,6 +502,8 @@ function renderVideos() {
 
 function renderClubs() {
   const container = document.getElementById('clubs-grid');
+  if (!container) return;
+
   const clubsToRender = state.teams.length ? state.teams : clubes;
 
   container.innerHTML = clubsToRender.slice(0, 4)
@@ -524,6 +537,7 @@ function renderClubs() {
 
 function renderStats() {
   const container = document.getElementById('stats-grid');
+  if (!container) return;
 
   container.innerHTML = metricas
     .map(
@@ -543,6 +557,7 @@ function renderStats() {
 
 function renderPoll() {
   const container = document.getElementById('poll-card');
+  if (!container) return;
 
   container.innerHTML = `
     <h4 class="poll-question">${enquete.pergunta}</h4>
@@ -563,6 +578,8 @@ function renderPoll() {
 
 function setupThemeToggle() {
   const toggle = document.getElementById('themeToggle');
+  if (!toggle) return;
+
   const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
 
   if (prefersLight) {
@@ -577,13 +594,53 @@ function setupThemeToggle() {
 function setupMobileMenu() {
   const btn = document.getElementById('mobileMenuBtn');
   const menu = document.getElementById('mobileMenu');
+  if (!btn || !menu) return;
 
   btn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
   });
 }
 
-// Inicializar todas as funções
+function setupTableSearch() {
+  const input = document.getElementById('tableSearch');
+  if (!input) return;
+
+  input.addEventListener('input', (event) => {
+    const value = event.target.value.trim().toLowerCase();
+    const filtered = value
+      ? state.table.filter((time) => time.nome.toLowerCase().includes(value))
+      : state.table;
+
+    const body = document.getElementById('table-body');
+    if (!body) return;
+
+    body.innerHTML = filtered
+      .map(
+        (time) => `
+          <tr>
+            <td>${time.pos}</td>
+            <td>
+              <div class="team-cell">
+                <span class="team-dot">${constructShield(time.nome, time.cor)}</span>
+                ${time.nome}
+              </div>
+            </td>
+            <td><strong>${time.pontos}</strong></td>
+            <td>${time.jogos}</td>
+            <td>${time.vitorias}</td>
+            <td>${time.empates}</td>
+            <td>${time.derrotas}</td>
+            <td>${time.gp}</td>
+            <td>${time.gc}</td>
+            <td>${time.sg}</td>
+            <td>${((time.pontos / (time.jogos * 3)) * 100).toFixed(1)}%</td>
+          </tr>
+        `
+      )
+      .join('');
+  });
+}
+
 renderLiveMatches();
 renderClubFilters();
 renderTable();
@@ -600,4 +657,5 @@ renderPoll();
 updateTimestamp();
 setupThemeToggle();
 setupMobileMenu();
+setupTableSearch();
 loadLiveData();
