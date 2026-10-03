@@ -104,11 +104,39 @@ const state = {
   latestUpdated: new Date()
 };
 
-const LIVE_API = {
-  table: 'https://www.thesportsdb.com/api/v1/json/1/lookuptable.php?l=4406&s=2024',
-  teams: 'https://www.thesportsdb.com/api/v1/json/1/lookup_all_teams.php?id=4406',
-  nextMatches: 'https://www.thesportsdb.com/api/v1/json/1/eventsnextleague.php?id=4406'
+const teamShortcuts = {
+  Palmeiras: 'PAL',
+  Flamengo: 'FLA',
+  'Atlético-MG': 'CAM',
+  Fortaleza: 'FOR',
+  Internacional: 'INT',
+  'São Paulo': 'SAO',
+  Grêmio: 'GRE',
+  Bragantino: 'BRA',
+  Bahia: 'BAH',
+  Vasco: 'VAS',
+  Corinthians: 'COR',
+  Cruzeiro: 'CRU',
+  Botafogo: 'BOT',
+  Cuiabá: 'CUI',
+  Fluminense: 'FLU',
+  Santos: 'SAN',
+  Juventude: 'JUV',
+  Goiás: 'GOI',
+  Coritiba: 'CFC',
+  'América-MG': 'AME'
 };
+
+function constructShield(name, color) {
+  const initials = teamShortcuts[name] || name.slice(0, 3).toUpperCase();
+  return `
+    <svg class="team-shield" viewBox="0 0 64 76" role="img" aria-label="${name}">
+      <path d="M32 2L54 9V33C54 48.4 45.7 59.5 32 68C18.3 59.5 10 48.4 10 33V9L32 2Z" fill="${color}" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+      <path d="M32 10L46 15V30C46 39.8 40.2 47.7 32 53.2C23.8 47.7 18 39.8 18 30V15L32 10Z" fill="rgba(255,255,255,0.16)"/>
+      <text x="32" y="39" text-anchor="middle" font-size="15" font-weight="800" fill="#ffffff" font-family="Inter, Arial, sans-serif">${initials}</text>
+    </svg>
+  `;
+}
 
 function safeNumber(value, fallback = 0) {
   const n = Number(value ?? fallback);
@@ -153,7 +181,7 @@ function normalizeTable(rawTable) {
 function normalizeTeams(rawTeams) {
   return rawTeams.map((team, index) => ({
     nome: team.strTeam || team.name || `Time ${index + 1}`,
-    sigla: (team.strTeamShort || team.strTeam?.slice(0, 3).toUpperCase() || 'TM').toUpperCase(),
+    sigla: (teamShortcuts[team.strTeam || team.name] || (team.strTeamShort || team.strTeam?.slice(0, 3).toUpperCase()) || 'TM').toUpperCase(),
     estadio: team.strStadium || 'Estádio local',
     titulos: 0,
     cor: getColorFromName(team.strTeam || team.name || `time-${index}`)
@@ -165,7 +193,7 @@ function normalizeMatches(rawEvents) {
     mandante: event.strHomeTeam || 'Casa',
     visitante: event.strAwayTeam || 'Visitante',
     placar: `${safeNumber(event.intHomeScore)} - ${safeNumber(event.intAwayScore)}`,
-    hora: event.strTime || event.strTime || '20:00',
+    hora: event.strTime || '20:00',
     corA: getColorFromName(event.strHomeTeam || 'Casa'),
     corB: getColorFromName(event.strAwayTeam || 'Visitante')
   }));
@@ -182,9 +210,9 @@ async function fetchJson(url) {
 async function loadLiveData() {
   try {
     const [tableRes, teamsRes, matchesRes] = await Promise.allSettled([
-      fetchJson(LIVE_API.table),
-      fetchJson(LIVE_API.teams),
-      fetchJson(LIVE_API.nextMatches)
+      fetchJson('https://www.thesportsdb.com/api/v1/json/1/lookuptable.php?l=4406&s=2024'),
+      fetchJson('https://www.thesportsdb.com/api/v1/json/1/lookup_all_teams.php?id=4406'),
+      fetchJson('https://www.thesportsdb.com/api/v1/json/1/eventsnextleague.php?id=4406')
     ]);
 
     if (tableRes.status === 'fulfilled' && tableRes.value?.table) {
@@ -248,7 +276,7 @@ function renderTable(filtro = 'Todos') {
           <td>${time.pos}</td>
           <td>
             <div class="team-cell">
-              <span class="team-dot" style="background:${time.cor};"></span>
+              <span class="team-dot">${constructShield(time.nome, time.cor)}</span>
               ${time.nome}
             </div>
           </td>
@@ -324,13 +352,13 @@ function renderMatches() {
           </div>
           <div class="match-score">
             <div class="team-meta">
-              <span class="team-mini" style="background:${partida.corA};">${partida.mandante.slice(0, 3).toUpperCase()}</span>
+              <span class="team-mini">${constructShield(partida.mandante, partida.corA)}</span>
               <span>${partida.mandante}</span>
             </div>
             <div class="score-result">${partida.placar}</div>
             <div class="team-meta" style="justify-content:flex-end;">
               <span>${partida.visitante}</span>
-              <span class="team-mini" style="background:${partida.corB};">${partida.visitante.slice(0, 3).toUpperCase()}</span>
+              <span class="team-mini">${constructShield(partida.visitante, partida.corB)}</span>
             </div>
           </div>
         </article>
@@ -382,7 +410,7 @@ function renderClubs() {
       (clube) => `
         <article class="club-card">
           <div class="club-header">
-            <span class="club-badge" style="background:${clube.cor};">${clube.sigla}</span>
+            <span class="club-badge">${constructShield(clube.nome, clube.cor)}</span>
             <div>
               <div class="club-name">${clube.nome}</div>
               <small>${clube.estadio}</small>
