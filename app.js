@@ -1,24 +1,24 @@
 const tabela = [
-  { pos: 1, nome: 'Palmeiras', pontos: 58, jogos: 28, vitorias: 17, empates: 7, derrotas: 4, gp: 42, gc: 18, sg: 24, cor: '#0f9d8c' },
-  { pos: 2, nome: 'Flamengo', pontos: 55, jogos: 28, vitorias: 16, empates: 7, derrotas: 5, gp: 47, gc: 26, sg: 21, cor: '#d91d1d' },
-  { pos: 3, nome: 'Atlético-MG', pontos: 53, jogos: 28, vitorias: 15, empates: 8, derrotas: 5, gp: 41, gc: 20, sg: 21, cor: '#0a5ec9' },
-  { pos: 4, nome: 'Fortaleza', pontos: 49, jogos: 28, vitorias: 14, empates: 7, derrotas: 7, gp: 39, gc: 28, sg: 11, cor: '#f4c542' },
-  { pos: 5, nome: 'Internacional', pontos: 47, jogos: 28, vitorias: 13, empates: 8, derrotas: 7, gp: 36, gc: 29, sg: 7, cor: '#d52d2d' },
-  { pos: 6, nome: 'São Paulo', pontos: 46, jogos: 28, vitorias: 12, empates: 10, derrotas: 6, gp: 35, gc: 26, sg: 9, cor: '#0d6efd' },
-  { pos: 7, nome: 'Grêmio', pontos: 43, jogos: 28, vitorias: 11, empates: 10, derrotas: 7, gp: 33, gc: 27, sg: 6, cor: '#1d4f91' },
-  { pos: 8, nome: 'Bragantino', pontos: 39, jogos: 28, vitorias: 10, empates: 9, derrotas: 9, gp: 31, gc: 30, sg: 1, cor: '#d8a72d' },
-  { pos: 9, nome: 'Bahia', pontos: 37, jogos: 28, vitorias: 9, empates: 10, derrotas: 9, gp: 29, gc: 31, sg: -2, cor: '#0da96a' },
-  { pos: 10, nome: 'Vasco', pontos: 36, jogos: 28, vitorias: 9, empates: 9, derrotas: 10, gp: 30, gc: 33, sg: -3, cor: '#f3d409' },
-  { pos: 11, nome: 'Corinthians', pontos: 35, jogos: 28, vitorias: 9, empates: 8, derrotas: 11, gp: 31, gc: 34, sg: -3, cor: '#d61f2a' },
-  { pos: 12, nome: 'Cruzeiro', pontos: 34, jogos: 28, vitorias: 8, empates: 10, derrotas: 10, gp: 28, gc: 31, sg: -3, cor: '#7a2dff' },
-  { pos: 13, nome: 'Botafogo', pontos: 33, jogos: 28, vitorias: 8, empates: 9, derrotas: 11, gp: 24, gc: 29, sg: -5, cor: '#3b82f6' },
-  { pos: 14, nome: 'Cuiabá', pontos: 31, jogos: 28, vitorias: 8, empates: 7, derrotas: 13, gp: 25, gc: 34, sg: -9, cor: '#ca8a04' },
-  { pos: 15, nome: 'Fluminense', pontos: 30, jogos: 28, vitorias: 7, empates: 9, derrotas: 12, gp: 25, gc: 36, sg: -11, cor: '#5ca6ea' },
-  { pos: 16, nome: 'Santos', pontos: 28, jogos: 28, vitorias: 6, empates: 10, derrotas: 12, gp: 24, gc: 35, sg: -11, cor: '#1f9d64' },
-  { pos: 17, nome: 'Juventude', pontos: 27, jogos: 28, vitorias: 6, empates: 9, derrotas: 13, gp: 22, gc: 37, sg: -15, cor: '#facc15' },
-  { pos: 18, nome: 'Goiás', pontos: 25, jogos: 28, vitorias: 6, empates: 7, derrotas: 15, gp: 23, gc: 39, sg: -16, cor: '#20c997' },
-  { pos: 19, nome: 'Coritiba', pontos: 23, jogos: 28, vitorias: 5, empates: 8, derrotas: 15, gp: 20, gc: 42, sg: -22, cor: '#1d4ed8' },
-  { pos: 20, nome: 'América-MG', pontos: 20, jogos: 28, vitorias: 5, empates: 5, derrotas: 18, gp: 17, gc: 45, sg: -28, cor: '#8b5cf6' }
+  { pos: 1, nome: 'Flamengo', pontos: 60, jogos: 28, vitorias: 18, empates: 6, derrotas: 4, gp: 52, gc: 24, sg: 28, cor: '#d91d1d' },
+  { pos: 2, nome: 'Palmeiras', pontos: 57, jogos: 28, vitorias: 17, empates: 6, derrotas: 5, gp: 48, gc: 22, sg: 26, cor: '#0f9d8c' },
+  { pos: 3, nome: 'Athletico Paranaense', pontos: 49, jogos: 28, vitorias: 14, empates: 7, derrotas: 7, gp: 39, gc: 28, sg: 11, cor: '#d41c2d' },
+  { pos: 4, nome: 'Fluminense', pontos: 48, jogos: 28, vitorias: 14, empates: 6, derrotas: 8, gp: 42, gc: 31, sg: 11, cor: '#5ca6ea' },
+  { pos: 5, nome: 'Bahia', pontos: 46, jogos: 28, vitorias: 13, empates: 7, derrotas: 8, gp: 35, gc: 29, sg: 6, cor: '#0da96a' },
+  { pos: 6, nome: 'Cruzeiro', pontos: 45, jogos: 28, vitorias: 12, empates: 9, derrotas: 7, gp: 33, gc: 27, sg: 6, cor: '#7a2dff' },
+  { pos: 7, nome: 'Santos', pontos: 41, jogos: 28, vitorias: 11, empates: 8, derrotas: 9, gp: 36, gc: 33, sg: 3, cor: '#1f9d64' },
+  { pos: 8, nome: 'Atlético Mineiro', pontos: 40, jogos: 27, vitorias: 12, empates: 4, derrotas: 11, gp: 36, gc: 33, sg: 3, cor: '#0a5ec9' },
+  { pos: 9, nome: 'Coritiba', pontos: 38, jogos: 28, vitorias: 9, empates: 11, derrotas: 8, gp: 29, gc: 30, sg: -1, cor: '#1d4ed8' },
+  { pos: 10, nome: 'Red Bull Bragantino', pontos: 36, jogos: 27, vitorias: 9, empates: 9, derrotas: 9, gp: 31, gc: 31, sg: 0, cor: '#d8a72d' },
+  { pos: 11, nome: 'São Paulo', pontos: 36, jogos: 28, vitorias: 9, empates: 9, derrotas: 10, gp: 30, gc: 32, sg: -2, cor: '#0d6efd' },
+  { pos: 12, nome: 'Botafogo', pontos: 35, jogos: 28, vitorias: 9, empates: 8, derrotas: 11, gp: 27, gc: 29, sg: -2, cor: '#3b82f6' },
+  { pos: 13, nome: 'Vitória', pontos: 33, jogos: 28, vitorias: 8, empates: 9, derrotas: 11, gp: 28, gc: 32, sg: -4, cor: '#1b7e67' },
+  { pos: 14, nome: 'Corinthians', pontos: 32, jogos: 28, vitorias: 8, empates: 8, derrotas: 12, gp: 31, gc: 35, sg: -4, cor: '#d61f2a' },
+  { pos: 15, nome: 'Mirassol', pontos: 32, jogos: 28, vitorias: 8, empates: 8, derrotas: 12, gp: 30, gc: 34, sg: -4, cor: '#3f8cff' },
+  { pos: 16, nome: 'Vasco da Gama', pontos: 31, jogos: 27, vitorias: 8, empates: 7, derrotas: 12, gp: 29, gc: 36, sg: -7, cor: '#f3d409' },
+  { pos: 17, nome: 'Grêmio', pontos: 29, jogos: 28, vitorias: 7, empates: 8, derrotas: 13, gp: 25, gc: 35, sg: -10, cor: '#1d4f91' },
+  { pos: 18, nome: 'Internacional', pontos: 28, jogos: 28, vitorias: 7, empates: 7, derrotas: 14, gp: 26, gc: 37, sg: -11, cor: '#d52d2d' },
+  { pos: 19, nome: 'Remo', pontos: 23, jogos: 28, vitorias: 5, empates: 8, derrotas: 15, gp: 22, gc: 39, sg: -17, cor: '#f59e0b' },
+  { pos: 20, nome: 'Chapecoense', pontos: 18, jogos: 27, vitorias: 4, empates: 6, derrotas: 17, gp: 20, gc: 45, sg: -25, cor: '#0f172a' }
 ];
 
 const artilheiros = [
@@ -26,55 +26,55 @@ const artilheiros = [
   { nome: 'Rafael', clube: 'Palmeiras', gols: 15, pos: 2 },
   { nome: 'Yuri Alberto', clube: 'Corinthians', gols: 14, pos: 3 },
   { nome: 'Tiquinho Soares', clube: 'Botafogo', gols: 13, pos: 4 },
-  { nome: 'Hulk', clube: 'Atlético-MG', gols: 12, pos: 5 }
+  { nome: 'Hulk', clube: 'Atlético Mineiro', gols: 12, pos: 5 }
 ];
 
 const noticias = [
   {
-    titulo: 'Palmeiras mantém liderança com vitória importante sobre rival direto',
+    titulo: 'Flamengo segue firme na liderança da Série A e amplia vantagem',
     categoria: 'Brasil',
     tempo: 'Há 1h',
-    resumo: 'Time alviverde ampliou vantagem na parte alta da tabela e segue como principal favorito ao título.'
+    resumo: 'Time rubro-negro mantém boa sequência e controla a ponta com mais confiança na temporada.'
   },
   {
-    titulo: 'Flamengo reage no segundo tempo e vence jogo decisivo no Maracanã',
+    titulo: 'Palmeiras reage e se mantém na briga pela liderança',
     categoria: 'Premier',
     tempo: 'Há 3h',
-    resumo: 'Equipes fizeram clássico eletrizante com várias chances e grande cobrança de pênalti.'
+    resumo: 'Equipes da parte alta da tabela seguem alternando a vantagem e aumentando a pressão no topo.'
   },
   {
-    titulo: 'Atlético-MG entra na briga pelo G-4 após goleada fora de casa',
+    titulo: 'Athletico e Fluminense aumentam pressão no G-4',
     categoria: 'Análise',
     tempo: 'Hoje',
-    resumo: 'Ataque mineiro teve brilho coletivo e mostrou consistência defensiva em uma equipe ofensiva.'
+    resumo: 'Ataques dos clubes da região de classificação mostram crescimento e volume ofensivo.'
   }
 ];
 
 const jogosRodada = [
-  { mandante: 'Palmeiras', visitante: 'Flamengo', placar: '2 - 1', hora: '18:30', corA: '#0f9d8c', corB: '#d91d1d' },
-  { mandante: 'Fortaleza', visitante: 'São Paulo', placar: '1 - 0', hora: '20:00', corA: '#f4c542', corB: '#0d6efd' },
-  { mandante: 'Grêmio', visitante: 'Internacional', placar: '2 - 2', hora: '21:00', corA: '#1d4f91', corB: '#d52d2d' },
-  { mandante: 'Vasco', visitante: 'Atlético-MG', placar: '1 - 3', hora: '19:30', corA: '#f3d409', corB: '#0a5ec9' }
+  { mandante: 'Flamengo', visitante: 'Palmeiras', placar: '2 - 1', hora: '18:30', corA: '#d91d1d', corB: '#0f9d8c' },
+  { mandante: 'Athletico Paranaense', visitante: 'Fluminense', placar: '1 - 0', hora: '20:00', corA: '#d41c2d', corB: '#5ca6ea' },
+  { mandante: 'Cruzeiro', visitante: 'Bahia', placar: '2 - 2', hora: '21:00', corA: '#7a2dff', corB: '#0da96a' },
+  { mandante: 'Vasco da Gama', visitante: 'Atlético Mineiro', placar: '1 - 3', hora: '19:30', corA: '#f3d409', corB: '#0a5ec9' }
 ];
 
 const proximasPartidas = [
   { data: '29/10', hora: '18:30', jogo: 'Bahia x Cruzeiro' },
-  { data: '29/10', hora: '20:00', jogo: 'Bragantino x Santos' },
+  { data: '29/10', hora: '20:00', jogo: 'Red Bull Bragantino x Santos' },
   { data: '30/10', hora: '18:30', jogo: 'Botafogo x Coritiba' },
-  { data: '30/10', hora: '21:00', jogo: 'Fluminense x Juventude' }
+  { data: '30/10', hora: '21:00', jogo: 'Fluminense x Mirassol' }
 ];
 
 const videos = [
-  { titulo: 'Melhores momentos: Palmeiras 2x1 Flamengo', tempo: '3:12', categoria: 'Resumo' },
-  { titulo: 'Análise da rodada: G-4 e rebaixamento', tempo: '4:48', categoria: 'Debate' },
-  { titulo: 'Gol do dia: Hulk marca golaço para o Atlético', tempo: '1:36', categoria: 'Gol' }
+  { titulo: 'Melhores momentos: Flamengo 2x1 Palmeiras', tempo: '3:12', categoria: 'Resumo' },
+  { titulo: 'Análise da rodada: G-4 e zona da degola', tempo: '4:48', categoria: 'Debate' },
+  { titulo: 'Gol do dia: Pedro marca golaço para o Flamengo', tempo: '1:36', categoria: 'Gol' }
 ];
 
 const clubes = [
-  { nome: 'Palmeiras', sigla: 'PAL', estadio: 'Allianz Parque', titulos: 12, cor: '#0f9d8c' },
   { nome: 'Flamengo', sigla: 'FLA', estadio: 'Maracanã', titulos: 8, cor: '#d91d1d' },
-  { nome: 'Atlético-MG', sigla: 'CAM', estadio: 'Arena MRV', titulos: 2, cor: '#0a5ec9' },
-  { nome: 'Fortaleza', sigla: 'FOR', estadio: 'Castelão', titulos: 0, cor: '#f4c542' }
+  { nome: 'Palmeiras', sigla: 'PAL', estadio: 'Allianz Parque', titulos: 12, cor: '#0f9d8c' },
+  { nome: 'Athletico Paranaense', sigla: 'ATH', estadio: 'Arena da Baixada', titulos: 1, cor: '#d41c2d' },
+  { nome: 'Fluminense', sigla: 'FLU', estadio: 'Maracanã', titulos: 4, cor: '#5ca6ea' }
 ];
 
 const metricas = [
@@ -89,10 +89,10 @@ const metricas = [
 const enquete = {
   pergunta: 'Quem deve ser campeão do Brasileirão neste ano?',
   opcoes: [
-    { nome: 'Palmeiras', percentual: 38 },
-    { nome: 'Flamengo', percentual: 27 },
-    { nome: 'Atlético-MG', percentual: 21 },
-    { nome: 'Fortaleza', percentual: 14 }
+    { nome: 'Flamengo', percentual: 38 },
+    { nome: 'Palmeiras', percentual: 27 },
+    { nome: 'Athletico Paranaense', percentual: 21 },
+    { nome: 'Fluminense', percentual: 14 }
   ]
 };
 
@@ -101,34 +101,30 @@ const state = {
   filter: 'Todos',
   matches: jogosRodada,
   teams: clubes,
-  latestUpdated: new Date(),
-  sortKey: 'pontos',
-  sortDirection: 'desc',
-  pollChoice: '',
-  pollResults: enquete.opcoes.map((option) => ({ ...option }))
+  latestUpdated: new Date()
 };
 
 const teamShortcuts = {
-  Palmeiras: 'PAL',
   Flamengo: 'FLA',
-  'Atlético-MG': 'CAM',
-  Fortaleza: 'FOR',
-  Internacional: 'INT',
-  'São Paulo': 'SAO',
-  Grêmio: 'GRE',
-  Bragantino: 'BRA',
-  Bahia: 'BAH',
-  Vasco: 'VAS',
-  Corinthians: 'COR',
-  Cruzeiro: 'CRU',
-  Botafogo: 'BOT',
-  Cuiabá: 'CUI',
+  Palmeiras: 'PAL',
+  'Athletico Paranaense': 'ATH',
   Fluminense: 'FLU',
+  Bahia: 'BAH',
+  Cruzeiro: 'CRU',
   Santos: 'SAN',
-  Juventude: 'JUV',
-  Goiás: 'GOI',
+  'Atlético Mineiro': 'CAM',
   Coritiba: 'CFC',
-  'América-MG': 'AME'
+  'Red Bull Bragantino': 'BRA',
+  'São Paulo': 'SAO',
+  Botafogo: 'BOT',
+  Vitória: 'VIT',
+  Corinthians: 'COR',
+  Mirassol: 'MIR',
+  'Vasco da Gama': 'VAS',
+  Grêmio: 'GRE',
+  Internacional: 'INT',
+  Remo: 'REM',
+  Chapecoense: 'CHA'
 };
 
 function constructShield(name, color) {
@@ -214,7 +210,7 @@ async function fetchJson(url) {
 async function loadLiveData() {
   try {
     const [tableRes, teamsRes, matchesRes] = await Promise.allSettled([
-      fetchJson('https://www.thesportsdb.com/api/v1/json/1/lookuptable.php?l=4406&s=2024'),
+      fetchJson('https://www.thesportsdb.com/api/v1/json/1/lookuptable.php?l=4406&s=2026'),
       fetchJson('https://www.thesportsdb.com/api/v1/json/1/lookup_all_teams.php?id=4406'),
       fetchJson('https://www.thesportsdb.com/api/v1/json/1/eventsnextleague.php?id=4406')
     ]);
@@ -246,8 +242,6 @@ async function loadLiveData() {
 
 function renderClubFilters() {
   const container = document.getElementById('clubFilter');
-  if (!container) return;
-
   const clubsList = ['Todos', ...new Set(state.table.map((time) => time.nome))];
 
   container.innerHTML = clubsList
@@ -271,58 +265,11 @@ function renderClubFilters() {
   });
 }
 
-function getSortValue(team, key) {
-  switch (key) {
-    case 'pos':
-      return team.pos;
-    case 'nome':
-      return team.nome;
-    case 'pontos':
-      return team.pontos;
-    case 'jogos':
-      return team.jogos;
-    case 'vitorias':
-      return team.vitorias;
-    case 'empates':
-      return team.empates;
-    case 'derrotas':
-      return team.derrotas;
-    case 'gp':
-      return team.gp;
-    case 'gc':
-      return team.gc;
-    case 'sg':
-      return team.sg;
-    default:
-      return team.pontos;
-  }
-}
-
 function renderTable(filtro = 'Todos') {
   const body = document.getElementById('table-body');
-  if (!body) return;
+  const times = filtro === 'Todos' ? state.table : state.table.filter((time) => time.nome === filtro);
 
-  const times = (filtro === 'Todos' ? state.table : state.table.filter((time) => time.nome === filtro)).slice();
-  const sortedTimes = times.sort((a, b) => {
-    const aValue = getSortValue(a, state.sortKey);
-    const bValue = getSortValue(b, state.sortKey);
-    const direction = state.sortDirection === 'asc' ? 1 : -1;
-
-    if (typeof aValue === 'string' && typeof bValue === 'string') {
-      return aValue.localeCompare(bValue) * direction;
-    }
-
-    return (aValue - bValue) * direction;
-  });
-
-  document.querySelectorAll('th[data-sort]').forEach((header) => {
-    const isActive = header.dataset.sort === state.sortKey;
-    header.classList.toggle('sort-active', isActive);
-    header.dataset.direction = isActive ? state.sortDirection : 'desc';
-    header.dataset.symbol = isActive ? (state.sortDirection === 'asc' ? '↑' : '↓') : '↕';
-  });
-
-  body.innerHTML = sortedTimes
+  body.innerHTML = times
     .map(
       (time) => `
         <tr>
@@ -347,29 +294,8 @@ function renderTable(filtro = 'Todos') {
     .join('');
 }
 
-function renderTopStats() {
-  const container = document.getElementById('top-stats');
-  if (!container) return;
-
-  container.innerHTML = metricas
-    .map(
-      (item) => `
-        <div class="stat-panel">
-          <div class="stat-icon">${item.icon}</div>
-          <div class="stat-info">
-            <strong>${item.valor}</strong>
-            <span>${item.label}</span>
-            <small>${item.detalhe}</small>
-          </div>
-        </div>
-      `
-    )
-    .join('');
-}
-
 function renderScorers() {
   const container = document.getElementById('scorers-grid');
-  if (!container) return;
 
   container.innerHTML = artilheiros
     .map(
@@ -394,7 +320,6 @@ function renderScorers() {
 
 function renderNews() {
   const container = document.getElementById('news-grid');
-  if (!container) return;
 
   container.innerHTML = noticias
     .map(
@@ -416,7 +341,6 @@ function renderNews() {
 
 function renderMatches() {
   const container = document.getElementById('matches-grid');
-  if (!container) return;
 
   container.innerHTML = state.matches
     .map(
@@ -445,7 +369,6 @@ function renderMatches() {
 
 function renderFixtures() {
   const container = document.getElementById('fixtures-list');
-  if (!container) return;
 
   container.innerHTML = proximasPartidas
     .map(
@@ -464,7 +387,6 @@ function renderFixtures() {
 
 function renderVideos() {
   const container = document.getElementById('videos-grid');
-  if (!container) return;
 
   container.innerHTML = videos
     .map(
@@ -481,8 +403,6 @@ function renderVideos() {
 
 function renderClubs() {
   const container = document.getElementById('clubs-grid');
-  if (!container) return;
-
   const clubsToRender = state.teams.length ? state.teams : clubes;
 
   container.innerHTML = clubsToRender.slice(0, 4)
@@ -514,143 +434,79 @@ function renderClubs() {
     .join('');
 }
 
+function renderStats() {
+  const container = document.getElementById('stats-grid');
+
+  container.innerHTML = metricas
+    .map(
+      (item) => `
+        <div class="stat-panel">
+          <div class="stat-icon">${item.icon}</div>
+          <div class="stat-info">
+            <strong>${item.valor}</strong>
+            <span>${item.label}</span>
+            <small>${item.detalhe}</small>
+          </div>
+        </div>
+      `
+    )
+    .join('');
+}
+
 function renderPoll() {
   const container = document.getElementById('poll-card');
-  if (!container) return;
-
-  const optionData = enquete.opcoes.map((option) => {
-    const selected = state.pollChoice === option.nome;
-    const percent = Math.min(selected ? option.percentual + 8 : option.percentual, 96);
-    return { ...option, percent };
-  });
 
   container.innerHTML = `
     <h4 class="poll-question">${enquete.pergunta}</h4>
     <div class="poll-options">
-      ${optionData
+      ${enquete.opcoes
         .map(
           (option) => `
-            <button type="button" class="poll-option ${state.pollChoice === option.nome ? 'selected' : ''}" data-vote="${option.nome}">
-              <div class="poll-copy">
-                <span>${option.nome}</span>
-                <strong>${option.percentual}%</strong>
-              </div>
-              <div class="poll-meter"><span style="width: ${option.percent}%"></span></div>
-            </button>
+            <div class="poll-option">
+              <strong>${option.nome}</strong>
+              <span>${option.percentual}%</span>
+            </div>
           `
         )
         .join('')}
     </div>
   `;
-
-  container.querySelectorAll('.poll-option').forEach((button) => {
-    button.addEventListener('click', () => {
-      state.pollChoice = button.dataset.vote;
-      renderPoll();
-    });
-  });
-}
-
-function setupTableSorting() {
-  document.querySelectorAll('th[data-sort]').forEach((header) => {
-    header.addEventListener('click', () => {
-      const nextSort = header.dataset.sort;
-      if (state.sortKey === nextSort) {
-        state.sortDirection = state.sortDirection === 'asc' ? 'desc' : 'asc';
-      } else {
-        state.sortKey = nextSort;
-        state.sortDirection = nextSort === 'pos' ? 'asc' : 'desc';
-      }
-
-      renderTable(state.filter);
-    });
-  });
 }
 
 function setupThemeToggle() {
   const toggle = document.getElementById('themeToggle');
-  if (!toggle) return;
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
 
-  const savedTheme = localStorage.getItem('portal-theme');
-  if (savedTheme === 'light') {
+  if (prefersLight) {
     document.body.classList.add('light');
   }
 
   toggle.addEventListener('click', () => {
     document.body.classList.toggle('light');
-    localStorage.setItem('portal-theme', document.body.classList.contains('light') ? 'light' : 'dark');
   });
 }
 
 function setupMobileMenu() {
   const btn = document.getElementById('mobileMenuBtn');
   const menu = document.getElementById('mobileMenu');
-  if (!btn || !menu) return;
 
   btn.addEventListener('click', () => {
     menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
   });
-
-  menu.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      menu.style.display = 'none';
-    });
-  });
 }
 
-function setupScrollSpy() {
-  const links = document.querySelectorAll('.main-nav a, .mobile-menu a');
-  const sections = [...document.querySelectorAll('main section[id]')];
-
-  const activate = () => {
-    const scrollPosition = window.scrollY + 130;
-    let current = sections[0]?.id || '';
-
-    sections.forEach((section) => {
-      if (scrollPosition >= section.offsetTop) {
-        current = section.id;
-      }
-    });
-
-    links.forEach((link) => {
-      const isActive = link.getAttribute('href') === `#${current}`;
-      link.classList.toggle('active-link', isActive);
-    });
-  };
-
-  window.addEventListener('scroll', activate);
-  activate();
-}
-
-function init() {
-  renderTopStats();
-  renderClubFilters();
-  renderTable();
-  renderScorers();
-  renderNews();
-  renderMatches();
-  renderFixtures();
-  renderVideos();
-  renderClubs();
-  renderPoll();
-  updateTimestamp();
-  setupThemeToggle();
-  setupMobileMenu();
-  setupTableSorting();
-  setupScrollSpy();
-  setInterval(updateTimestamp, 1000 * 60);
-  loadLiveData();
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
-
-window.addEventListener('resize', () => {
-  const menu = document.getElementById('mobileMenu');
-  if (menu && window.innerWidth > 980) {
-    menu.style.display = 'none';
-  }
-});
+renderTopStats();
+renderClubFilters();
+renderTable();
+renderScorers();
+renderNews();
+renderMatches();
+renderFixtures();
+renderVideos();
+renderClubs();
+renderStats();
+renderPoll();
+updateTimestamp();
+setupThemeToggle();
+setupMobileMenu();
+loadLiveData();
