@@ -30,42 +30,12 @@ const artilheiros = [
 ];
 
 const noticias = [
-  {
-    titulo: 'Flamengo segue firme na liderança da Série A e amplia vantagem',
-    categoria: 'Brasil',
-    tempo: 'Há 1h',
-    resumo: 'Time rubro-negro mantém boa sequência e controla a ponta com mais confiança na temporada.'
-  },
-  {
-    titulo: 'Palmeiras reage e se mantém na briga pela liderança',
-    categoria: 'Premier',
-    tempo: 'Há 3h',
-    resumo: 'Equipes da parte alta da tabela seguem alternando a vantagem e aumentando a pressão no topo.'
-  },
-  {
-    titulo: 'Athletico e Fluminense aumentam pressão no G-4',
-    categoria: 'Análise',
-    tempo: 'Hoje',
-    resumo: 'Ataques dos clubes da região de classificação mostram crescimento e volume ofensivo.'
-  },
-  {
-    titulo: 'Bahia busca recuperação após revés',
-    categoria: 'Rodada',
-    tempo: 'Há 2h',
-    resumo: 'Clube busca voltar às vitórias e consolidar posição na parte superior da tabela.'
-  },
-  {
-    titulo: 'Cruzeiro investe em reforços para final de temporada',
-    categoria: 'Mercado',
-    tempo: 'Há 4h',
-    resumo: 'Celeste se move no mercado em busca de peças que possam fazer diferença no restante da temporada.'
-  },
-  {
-    titulo: 'São Paulo trama plano de resgate',
-    categoria: 'Estratégia',
-    tempo: 'Ontem',
-    resumo: 'Tricolor paulista planeja sequência de jogos para recuperar posição e subir na tabela.'
-  }
+  { titulo: 'Flamengo segue firme na liderança da Série A e amplia vantagem', categoria: 'Brasil', tempo: 'Há 1h', resumo: 'Time rubro-negro mantém boa sequência e controla a ponta com mais confiança na temporada.' },
+  { titulo: 'Palmeiras reage e se mantém na briga pela liderança', categoria: 'Premier', tempo: 'Há 3h', resumo: 'Equipes da parte alta da tabela seguem alternando a vantagem e aumentando a pressão no topo.' },
+  { titulo: 'Athletico e Fluminense aumentam pressão no G-4', categoria: 'Análise', tempo: 'Hoje', resumo: 'Ataques dos clubes da região de classificação mostram crescimento e volume ofensivo.' },
+  { titulo: 'Bahia busca recuperação após revés', categoria: 'Rodada', tempo: 'Há 2h', resumo: 'Clube busca voltar às vitórias e consolidar posição na parte superior da tabela.' },
+  { titulo: 'Cruzeiro investe em reforços para final de temporada', categoria: 'Mercado', tempo: 'Há 4h', resumo: 'Celeste se move no mercado em busca de peças que possam fazer diferença no restante da temporada.' },
+  { titulo: 'São Paulo trama plano de resgate', categoria: 'Estratégia', tempo: 'Ontem', resumo: 'Tricolor paulista planeja sequência de jogos para recuperar posição e subir na tabela.' }
 ];
 
 const jogosRodada = [
@@ -145,11 +115,36 @@ const teamShortcuts = {
   Chapecoense: 'CHA'
 };
 
-function constructShield(name, color) {
+const teamShieldColors = {
+  Flamengo: '#d91d1d',
+  Palmeiras: '#0f9d8c',
+  'Athletico Paranaense': '#d41c2d',
+  Fluminense: '#5ca6ea',
+  Bahia: '#0da96a',
+  Cruzeiro: '#7a2dff',
+  Santos: '#1f9d64',
+  'Atlético Mineiro': '#0a5ec9',
+  Coritiba: '#1d4ed8',
+  'Red Bull Bragantino': '#d8a72d',
+  'São Paulo': '#0d6efd',
+  Botafogo: '#3b82f6',
+  Vitória: '#1b7e67',
+  Corinthians: '#d61f2a',
+  Mirassol: '#3f8cff',
+  'Vasco da Gama': '#f3d409',
+  Grêmio: '#1d4f91',
+  Internacional: '#d52d2d',
+  Remo: '#f59e0b',
+  Chapecoense: '#0f172a'
+};
+
+function constructShield(name, color = '#0d6efd') {
   const initials = teamShortcuts[name] || name.slice(0, 3).toUpperCase();
+  const fill = color || teamShieldColors[name] || '#3aa0ff';
+
   return `
     <svg class="team-shield" viewBox="0 0 64 76" role="img" aria-label="${name}">
-      <path d="M32 2L54 9V33C54 48.4 45.7 59.5 32 68C18.3 59.5 10 48.4 10 33V9L32 2Z" fill="${color}" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
+      <path d="M32 2L54 9V33C54 48.4 45.7 59.5 32 68C18.3 59.5 10 48.4 10 33V9L32 2Z" fill="${fill}" stroke="rgba(255,255,255,0.35)" stroke-width="2"/>
       <path d="M32 10L46 15V30C46 39.8 40.2 47.7 32 53.2C23.8 47.7 18 39.8 18 30V15L32 10Z" fill="rgba(255,255,255,0.16)"/>
       <text x="32" y="39" text-anchor="middle" font-size="15" font-weight="800" fill="#ffffff" font-family="Inter, Arial, sans-serif">${initials}</text>
     </svg>
@@ -173,9 +168,7 @@ function updateTimestamp() {
 }
 
 function getColorFromName(name) {
-  const palette = ['#0f9d8c', '#d91d1d', '#0a5ec9', '#f4c542', '#d52d2d', '#0d6efd', '#1d4f91', '#d8a72d', '#0da96a', '#f3d409', '#7a2dff'];
-  const index = Array.from(name).reduce((sum, char) => sum + char.charCodeAt(0), 0) % palette.length;
-  return palette[index];
+  return teamShieldColors[name] || '#3aa0ff';
 }
 
 function normalizeTable(rawTable) {
@@ -247,6 +240,7 @@ async function loadLiveData() {
     }
 
     state.latestUpdated = new Date();
+    renderTopStats();
     updateTimestamp();
     renderTable(state.filter);
     renderClubFilters();
@@ -255,9 +249,35 @@ async function loadLiveData() {
     renderLiveMatches();
   } catch (error) {
     console.warn('Usando dados locais porque a API não respondeu.', error);
+    renderTopStats();
     updateTimestamp();
     renderTable(state.filter);
   }
+}
+
+function renderTopStats() {
+  const statsContainer = document.getElementById('top-stats');
+  if (!statsContainer) return;
+
+  const lider = state.table[0] || tabela[0];
+  const mediaGols = ((tabela.reduce((sum, time) => sum + time.gp, 0) / (tabela.length * 28 || 1))).toFixed(1);
+
+  const stats = [
+    { value: lider.pontos, label: 'Pontos do líder' },
+    { value: mediaGols, label: 'Média de gols' },
+    { value: '28', label: 'Rodada atual' }
+  ];
+
+  statsContainer.innerHTML = stats
+    .map(
+      (item) => `
+        <div class="hero-stat">
+          <strong>${item.value}</strong>
+          <span>${item.label}</span>
+        </div>
+      `
+    )
+    .join('');
 }
 
 function renderClubFilters() {
@@ -324,7 +344,7 @@ function renderLiveMatches() {
   if (!container) return;
 
   container.innerHTML = state.matches
-    .slice(0, 4)
+    .slice(0, 3)
     .map(
       (partida) => `
         <div class="live-match-card">
@@ -607,9 +627,7 @@ function setupTableSearch() {
 
   input.addEventListener('input', (event) => {
     const value = event.target.value.trim().toLowerCase();
-    const filtered = value
-      ? state.table.filter((time) => time.nome.toLowerCase().includes(value))
-      : state.table;
+    const filtered = value ? state.table.filter((time) => time.nome.toLowerCase().includes(value)) : state.table;
 
     const body = document.getElementById('table-body');
     if (!body) return;
@@ -641,6 +659,7 @@ function setupTableSearch() {
   });
 }
 
+renderTopStats();
 renderLiveMatches();
 renderClubFilters();
 renderTable();
@@ -659,3 +678,4 @@ setupThemeToggle();
 setupMobileMenu();
 setupTableSearch();
 loadLiveData();
+
