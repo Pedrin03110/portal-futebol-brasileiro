@@ -96,41 +96,130 @@ const enquete = {
   ]
 };
 
-const clubesFiltro = ['Todos', ...new Set(tabela.map((time) => time.nome))];
+const state = {
+  table: tabela,
+  filter: 'Todos',
+  matches: jogosRodada,
+  teams: clubes,
+  latestUpdated: new Date()
+};
 
-function renderTopStats() {
-  const container = document.getElementById('top-stats');
+const LIVE_API = {
+  table: 'https://www.thesportsdb.com/api/v1/json/1/lookuptable.php?l=4406&s=2024',
+  teams: 'https://www.thesportsdb.com/api/v1/json/1/lookup_all_teams.php?id=4406',
+  nextMatches: 'https://www.thesportsdb.com/api/v1/json/1/eventsnextleague.php?id=4406'
+};
 
-  const cards = [
-    { label: 'Times no topo', value: '7', info: 'Fora da zona do rebaixamento', icon: '🏆' },
-    { label: 'Jogos decididos', value: '64%', info: 'Com vitória em casa ou fora', icon: '⚖️' },
-    { label: 'Artilheiro', value: '17', info: 'Gols de Pedro', icon: '🥅' },
-    { label: 'Partidas em 7 dias', value: '12', info: 'Confrontos decisivos', icon: '📅' }
-  ];
+function safeNumber(value, fallback = 0) {
+  const n = Number(value ?? fallback);
+  return Number.isFinite(n) ? n : fallback;
+}
 
-  container.innerHTML = cards
-    .map(
-      (card) => `
-        <article class="stat-panel">
-          <div class="stat-icon">${card.icon}</div>
-          <div class="stat-info">
-            <strong>${card.value}</strong>
-            <span>${card.label}</span>
-            <small>${card.info}</small>
-          </div>
-        </article>
-      `
-    )
-    .join('');
+function formatTime() {
+  return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+
+function updateTimestamp() {
+  const node = document.getElementById('update-time');
+  if (node) {
+    node.textContent = `Atualizado às ${formatTime()}`;
+  }
+}
+
+function getColorFromName(name) {
+  const palette = ['#0f9d8c', '#d91d1d', '#0a5ec9', '#f4c542', '#d52d2d', '#0d6efd', '#1d4f91', '#d8a72d', '#0da96a', '#f3d409', '#7a2dff'];
+  const index = Array.from(name).reduce((sum, char) => sum + char.charCodeAt(0), 0) % palette.length;
+  return palette[index];
+}
+
+function normalizeTable(rawTable) {
+  return rawTable
+    .map((team, index) => ({
+      pos: index + 1,
+      nome: team.strTeam || team.name || team.teamName || `Time ${index + 1}`,
+      pontos: safeNumber(team.points ?? team.totalPoints ?? team.Pts),
+      jogos: safeNumber(team.played ?? team.playedGames ?? team.gamesPlayed),
+      vitorias: safeNumber(team.win ?? team.wins),
+      empates: safeNumber(team.draw ?? team.draws),
+      derrotas: safeNumber(team.loss ?? team.losses),
+      gp: safeNumber(team.goalsfor ?? team.goalsFor ?? team.gf),
+      gc: safeNumber(team.goalsagainst ?? team.goalsAgainst ?? team.ga),
+      sg: safeNumber(team.goalsdifference ?? team.gd),
+      cor: getColorFromName(team.strTeam || team.name || `time-${index}`)
+    }))
+    .slice(0, 20);
+}
+
+function normalizeTeams(rawTeams) {
+  return rawTeams.map((team, index) => ({
+    nome: team.strTeam || team.name || `Time ${index + 1}`,
+    sigla: (team.strTeamShort || team.strTeam?.slice(0, 3).toUpperCase() || 'TM').toUpperCase(),
+    estadio: team.strStadium || 'Estádio local',
+    titulos: 0,
+    cor: getColorFromName(team.strTeam || team.name || `time-${index}`)
+  }));
+}
+
+function normalizeMatches(rawEvents) {
+  return rawEvents.slice(0, 4).map((event) => ({
+    mandante: event.strHomeTeam || 'Casa',
+    visitante: event.strAwayTeam || 'Visitante',
+    placar: `${safeNumber(event.intHomeScore)} - ${safeNumber(event.intAwayScore)}`,
+    hora: event.strTime || event.strTime || '20:00',
+    corA: getColorFromName(event.strHomeTeam || 'Casa'),
+    corB: getColorFromName(event.strAwayTeam || 'Visitante')
+  }));
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url, { cache: 'no-store' });
+  if (!response.ok) {
+    throw new Error(`Erro ao carregar dados: ${response.status}`);
+  }
+  return response.json();
+}
+
+async function loadLiveData() {
+  try {
+    const [tableRes, teamsRes, matchesRes] = await Promise.allSettled([
+      fetchJson(LIVE_API.table),
+      fetchJson(LIVE_API.teams),
+      fetchJson(LIVE_API.nextMatches)
+    ]);
+
+    if (tableRes.status === 'fulfilled' && tableRes.value?.table) {
+      state.table = normalizeTable(tableRes.value.table);
+    }
+
+    if (teamsRes.status === 'fulfilled' && teamsRes.value?.teams) {
+      state.teams = normalizeTeams(teamsRes.value.teams);
+    }
+
+    if (matchesRes.status === 'fulfilled' && matchesRes.value?.events) {
+      state.matches = normalizeMatches(matchesRes.value.events);
+    }
+
+    state.latestUpdated = new Date();
+    updateTimestamp();
+    renderTable(state.filter);
+    renderClubFilters();
+    renderClubs();
+    renderMatches();
+  } catch (error) {
+    console.warn('Usando dados locais porque a API não respondeu.', error);
+    updateTimestamp();
+    renderTable(state.filter);
+  }
 }
 
 function renderClubFilters() {
   const container = document.getElementById('clubFilter');
+  const clubsList = ['Todos', ...new Set(state.table.map((time) => time.nome))];
 
-  container.innerHTML = clubesFiltro
+  container.innerHTML = clubsList
     .map(
       (clube, index) => `
-        <button class="filter-pill ${index === 0 ? 'active' : ''}" data-clube="${clube}">
+        <button class="filter-pill ${index === 0 || state.filter === clube ? 'active' : ''}" data-clube="${clube}">
           ${clube}
         </button>
       `
@@ -140,16 +229,17 @@ function renderClubFilters() {
   container.querySelectorAll('.filter-pill').forEach((button) => {
     button.addEventListener('click', () => {
       const selected = button.dataset.clube;
+      state.filter = selected;
+      renderTable(selected);
       container.querySelectorAll('.filter-pill').forEach((pill) => pill.classList.remove('active'));
       button.classList.add('active');
-      renderTable(selected);
     });
   });
 }
 
 function renderTable(filtro = 'Todos') {
   const body = document.getElementById('table-body');
-  const times = filtro === 'Todos' ? tabela : tabela.filter((time) => time.nome === filtro);
+  const times = filtro === 'Todos' ? state.table : state.table.filter((time) => time.nome === filtro);
 
   body.innerHTML = times
     .map(
@@ -224,7 +314,7 @@ function renderNews() {
 function renderMatches() {
   const container = document.getElementById('matches-grid');
 
-  container.innerHTML = jogosRodada
+  container.innerHTML = state.matches
     .map(
       (partida) => `
         <article class="match-card">
@@ -285,8 +375,9 @@ function renderVideos() {
 
 function renderClubs() {
   const container = document.getElementById('clubs-grid');
+  const clubsToRender = state.teams.length ? state.teams : clubes;
 
-  container.innerHTML = clubes
+  container.innerHTML = clubsToRender.slice(0, 4)
     .map(
       (clube) => `
         <article class="club-card">
@@ -299,7 +390,7 @@ function renderClubs() {
           </div>
           <div class="club-meta">
             <span>Títulos</span>
-            <strong>${clube.titulos}</strong>
+            <strong>${clube.titulos || 0}</strong>
           </div>
           <div class="club-meta">
             <span>Último título</span>
@@ -307,7 +398,7 @@ function renderClubs() {
           </div>
           <div class="club-meta">
             <span>Posição atual</span>
-            <strong>${tabela.find((time) => time.nome === clube.nome)?.pos || '-'}º</strong>
+            <strong>${state.table.find((time) => time.nome === clube.nome)?.pos || '-'}º</strong>
           </div>
         </article>
       `
@@ -387,5 +478,7 @@ renderVideos();
 renderClubs();
 renderStats();
 renderPoll();
+updateTimestamp();
 setupThemeToggle();
 setupMobileMenu();
+loadLiveData();
